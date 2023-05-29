@@ -1,5 +1,6 @@
 package com.reservas.autority;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class ControllerAuthority {
     }
 
     @GetMapping("/{id}")
-    public Authority show(@PathVariable Long id){
+    public Authority show(@PathVariable Long id)throws NullResponseNotFoundException {
         return this.serviceAuthority.show(id);
     }
 

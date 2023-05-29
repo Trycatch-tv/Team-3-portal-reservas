@@ -3,6 +3,7 @@ package com.reservas.profile;
 
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class ControllerProfile {
         return this.serviceProfile.list();
     }
     @GetMapping("/{id}")
-    public Profile show(@PathVariable Long id){
+    public Profile show(@PathVariable Long id) throws NullResponseNotFoundException {
         return this.serviceProfile.show(id);
     }
 

@@ -1,11 +1,13 @@
 package com.reservas.categorydish;
 
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceCategoryDish {
@@ -21,7 +23,12 @@ public class ServiceCategoryDish {
         return this.repositoryCategoryDish.findAll();
     }
 
-    public CategoryDish show(Long id){ return this.repositoryCategoryDish.findById(id).get(); }
+    public CategoryDish show(Long id) throws NullResponseNotFoundException {
+        Optional<CategoryDish> categoryDishOptional= this.repositoryCategoryDish.findById(id);
+        if(!categoryDishOptional.isPresent()){
+            throw new NullResponseNotFoundException("Data not available");
+        }
+        return categoryDishOptional.get(); }
 
     public CategoryDish create(CategoryDish categoryDish){
         return this.repositoryCategoryDish.save(categoryDish);

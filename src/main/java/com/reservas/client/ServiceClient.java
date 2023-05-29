@@ -1,9 +1,11 @@
 package com.reservas.client;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceClient {
@@ -15,7 +17,12 @@ public class ServiceClient {
 
     public List<Client> list(){ return this.repositoryClient.findAll(); }
 
-    public Client show(Long id){ return this.repositoryClient.findById(id).get();}
+    public Client show(Long id) throws NullResponseNotFoundException{
+        Optional<Client> client = this.repositoryClient.findById(id);
+        if(!client.isPresent()){
+            throw new NullResponseNotFoundException("Data not available");
+        }
+        return client.get();}
 
     public Client create(Client client){ return this.repositoryClient.save(client); }
 

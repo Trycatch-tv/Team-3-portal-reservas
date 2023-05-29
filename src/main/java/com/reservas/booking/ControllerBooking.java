@@ -1,5 +1,6 @@
 package com.reservas.booking;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class ControllerBooking {
         return this.serviceBooking.list();
     }
     @GetMapping("/{id}")
-    public Booking show(@PathVariable Long id){
+    public Booking show(@PathVariable Long id) throws NullResponseNotFoundException {
         return this.serviceBooking.show(id);
     }
 

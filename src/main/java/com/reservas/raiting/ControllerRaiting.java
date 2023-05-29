@@ -2,6 +2,7 @@ package com.reservas.raiting;
 
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class ControllerRaiting {
         return this.serviceRaiting.list();
     }
     @GetMapping("/{id}")
-    public Raiting show(@PathVariable Long id){
+    public Raiting show(@PathVariable Long id)throws NullResponseNotFoundException {
         return this.serviceRaiting.show(id);
     }
 

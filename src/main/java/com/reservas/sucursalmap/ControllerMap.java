@@ -2,6 +2,7 @@ package com.reservas.sucursalmap;
 
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class ControllerMap {
         return this.serviceMap.list();
     }
     @GetMapping("/{id}")
-    public Maps show(@PathVariable Long id){
+    public Maps show(@PathVariable Long id) throws NullResponseNotFoundException {
         return this.serviceMap.show(id);
     }
 

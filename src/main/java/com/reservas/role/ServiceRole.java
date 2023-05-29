@@ -1,10 +1,13 @@
 package com.reservas.role;
 
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ServiceRole {
     @Autowired
@@ -17,7 +20,12 @@ public class ServiceRole {
 
     public List<Roles> list(){ return this.repositoryRole.findAll(); }
 
-    public Roles show(Long id) { return this.repositoryRole.findById(id).get(); }
+    public Roles show(Long id)throws NullResponseNotFoundException {
+        Optional<Roles> roles = this.repositoryRole.findById(id);
+        if(!roles.isPresent()){
+            throw new NullResponseNotFoundException("Data not available");
+        }
+        return roles.get(); }
 
     public Roles create(Roles roles){ return this.repositoryRole.save(roles); }
 

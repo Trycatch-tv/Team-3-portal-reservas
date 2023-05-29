@@ -2,6 +2,7 @@ package com.reservas.table;
 
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class ControllerTable {
         return this.serviceTable.list();
     }
     @GetMapping("/{id}")
-    public TableRest show(@PathVariable Long id){
+    public TableRest show(@PathVariable Long id)throws NullResponseNotFoundException {
         return this.serviceTable.show(id);
     }
 

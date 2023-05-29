@@ -1,9 +1,11 @@
 package com.reservas.autority;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceAuthority {
@@ -16,8 +18,12 @@ public class ServiceAuthority {
         this.repositoryAuthority = repositoryAuthority;
     }
 
-    public Authority show(Long id){
-        return this.repositoryAuthority.findById(id).get();
+    public Authority show(Long id) throws NullResponseNotFoundException {
+        Optional<Authority> authority = this.repositoryAuthority.findById(id);
+        if (!authority.isPresent()){
+            throw new NullResponseNotFoundException("Data not available");
+        }
+        return authority.get();
     }
 
     public List<Authority> list(){

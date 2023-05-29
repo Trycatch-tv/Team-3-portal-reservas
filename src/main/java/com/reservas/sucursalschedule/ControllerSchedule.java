@@ -1,5 +1,6 @@
 package com.reservas.sucursalschedule;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class ControllerSchedule {
         return this.serviceSchedule.list();
     }
     @GetMapping("/{id}")
-    public Schedule show(@PathVariable Long id){
+    public Schedule show(@PathVariable Long id) throws NullResponseNotFoundException {
         return this.serviceSchedule.show(id);
     }
 

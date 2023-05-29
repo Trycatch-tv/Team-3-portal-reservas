@@ -1,5 +1,6 @@
 package com.reservas.categorydish;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,8 @@ public class ControllerCategoryDish {
     public List<CategoryDish> list(){ return this.serviceCategoryDish.list(); }
 
     @GetMapping("/{id}")
-    public CategoryDish show(@PathVariable Long id){ return this.serviceCategoryDish.show(id); }
+    public CategoryDish show(@PathVariable Long id)throws NullResponseNotFoundException {
+        return this.serviceCategoryDish.show(id); }
 
     @PostMapping
     public CategoryDish create(@RequestBody CategoryDish categoryDish) { return this.serviceCategoryDish.create(categoryDish); }

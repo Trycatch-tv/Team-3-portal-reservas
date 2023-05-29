@@ -1,5 +1,6 @@
 package com.reservas.client;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class ControllerClient {
     public List<Client> list(){ return this.serviceClient.list(); }
 
     @GetMapping("/{id}")
-    public Client show(@PathVariable Long id){ return this.serviceClient.show(id); }
+    public Client show(@PathVariable Long id)throws NullResponseNotFoundException { return this.serviceClient.show(id); }
 
     @PostMapping
     public Client create(@RequestBody Client client) {

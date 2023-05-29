@@ -1,9 +1,12 @@
 package com.reservas.booking;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ServiceBooking {
 
@@ -19,8 +22,12 @@ public class ServiceBooking {
         return this.repositoryBooking.findAll();
     }
 
-    public Booking show(Long id){
-        return this.repositoryBooking.findById(id).get();
+    public Booking show(Long id) throws NullResponseNotFoundException {
+        Optional<Booking> booking=  this.repositoryBooking.findById(id);
+        if (!booking.isPresent()){
+            throw new NullResponseNotFoundException("Data not available");
+        }
+        return booking.get();
     }
 
     public Booking create(Booking booking){

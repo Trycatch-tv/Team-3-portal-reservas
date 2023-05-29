@@ -3,6 +3,7 @@ package com.reservas.dish;
 
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class ControllerDish {
         return this.serviceDish.list();
     }
     @GetMapping("/{id}")
-    public Dish show(@PathVariable Long id){
+    public Dish show(@PathVariable Long id)throws NullResponseNotFoundException  {
         return this.serviceDish.show(id);
     }
 

@@ -3,6 +3,7 @@ package com.reservas.sucursal;
 
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class ControllerSucursal {
         return this.serviceSucursal.list();
     }
     @GetMapping("/{id}")
-    public Sucursal show(@PathVariable Long id){
+    public Sucursal show(@PathVariable Long id)throws NullResponseNotFoundException {
         return this.serviceSucursal.show(id);
     }
 

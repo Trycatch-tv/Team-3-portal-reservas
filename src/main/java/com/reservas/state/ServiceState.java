@@ -1,9 +1,11 @@
 package com.reservas.state;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceState {
@@ -18,7 +20,12 @@ public class ServiceState {
 
     public List<States> list(){ return this.repositoryStates.findAll(); }
 
-    public States show(Long id){ return this.repositoryStates.findById(id).get(); }
+    public States show(Long id)throws NullResponseNotFoundException {
+        Optional<States> states = this.repositoryStates.findById(id);
+        if(!states.isPresent()){
+            throw new NullResponseNotFoundException("Data not available");
+        }
+        return this.repositoryStates.findById(id).get(); }
 
     public States create(States states){ return this.repositoryStates.save(states); }
 

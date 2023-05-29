@@ -1,5 +1,6 @@
 package com.reservas.follow;
 
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class ControllerFollow {
         return this.serviceFollow.list();
     }
     @GetMapping("/{id}")
-    public Follow show(@PathVariable Long id){
+    public Follow show(@PathVariable Long id)throws NullResponseNotFoundException {
         return this.serviceFollow.show(id);
     }
 

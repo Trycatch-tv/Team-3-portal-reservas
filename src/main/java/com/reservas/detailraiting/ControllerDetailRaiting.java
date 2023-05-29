@@ -2,6 +2,7 @@ package com.reservas.detailraiting;
 
 import com.reservas.autority.Authority;
 import com.reservas.autority.ServiceAuthority;
+import com.reservas.error.NullResponseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class ControllerDetailRaiting {
     }
 
     @GetMapping("/{id}")
-    public DetailRaiting show(@PathVariable Long id){
+    public DetailRaiting show(@PathVariable Long id) throws NullResponseNotFoundException {
         return this.serviceDetailRaiting.show(id);
     }
 
