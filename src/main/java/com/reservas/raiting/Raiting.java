@@ -24,7 +24,7 @@ public class Raiting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="score", unique = true)
+    @Column(name="score")
     private Integer score;
 
     @Column(name = "comments")

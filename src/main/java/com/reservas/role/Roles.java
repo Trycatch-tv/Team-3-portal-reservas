@@ -3,6 +3,7 @@ package com.reservas.role;
 import com.reservas.autority.Authority;
 import com.reservas.client.Client;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,7 +24,7 @@ public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotBlank(message = "Name is mandatory")
     @Column(name="name", unique = true)
     private String name;
 

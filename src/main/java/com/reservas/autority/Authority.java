@@ -2,6 +2,7 @@ package com.reservas.autority;
 
 import com.reservas.role.Roles;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,9 +23,11 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name required to rol")
     @Column(name="name", unique = true)
     private String name;
 
+    @NotBlank(message = "Description important to rol")
     @Column(name = "description")
     private String description;
 

@@ -1,6 +1,7 @@
 package com.reservas.autority;
 
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ControllerAuthority {
     }
 
     @PostMapping
-    public Authority create(@RequestBody Authority authority){
+    public Authority create(@RequestBody @Valid Authority authority){
         return this.serviceAuthority.create(authority);
     }
 

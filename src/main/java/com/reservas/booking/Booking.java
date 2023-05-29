@@ -5,6 +5,7 @@ import com.reservas.state.States;
 import com.reservas.sucursal.Sucursal;
 import com.reservas.table.TableRest;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -25,6 +26,7 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     @Column(name="dateBook")
     private LocalDate dateBook;

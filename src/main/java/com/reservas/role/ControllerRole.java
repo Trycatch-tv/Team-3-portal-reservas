@@ -3,6 +3,7 @@ package com.reservas.role;
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class ControllerRole {
 
     @GetMapping
     public List<Roles> list(){
+        System.out.println("Entro");
         return this.serviceRole.list();
     }
     @GetMapping("/{id}")
@@ -29,7 +31,9 @@ public class ControllerRole {
     }
 
     @PostMapping
-    public Roles create(@RequestBody Roles roles){
+    public Roles create(@RequestBody @Valid Roles roles){
+
+        System.out.println(roles.toString());
         return this.serviceRole.create(roles);
     }
 
