@@ -23,7 +23,9 @@ public class ControllerClient {
     public Client show(@PathVariable Long id){ return this.serviceClient.show(id); }
 
     @PostMapping
-    public Client create(@RequestBody Client client) { return this.serviceClient.create(client); }
+    public Client create(@RequestBody Client client) {
+        System.out.println(client.toString());
+        return this.serviceClient.create(client); }
 
     @PutMapping
     public Client edit(@RequestBody Client client) { return this.serviceClient.edit(client); }
