@@ -1,6 +1,7 @@
 package com.reservas.booking;
 
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class ControllerBooking {
     }
 
     @PostMapping
-    public Booking create(@RequestBody Booking booking){
+    public Booking create(@RequestBody @Valid Booking booking){
         return this.serviceBooking.create(booking);
     }
 

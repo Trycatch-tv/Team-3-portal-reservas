@@ -2,6 +2,8 @@ package com.reservas.sucursalschedule;
 
 import com.reservas.sucursal.Sucursal;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -22,16 +24,22 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name="day")
     private String day;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "startService")
     private LocalTime startService;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name="endService")
     private LocalTime endService;
 
-    @Column(name = "status")
+    @Column(name = "status",columnDefinition = "boolean default false")
     private Boolean status;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

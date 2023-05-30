@@ -2,6 +2,8 @@ package com.reservas.sucursalmap;
 
 import com.reservas.sucursal.Sucursal;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -21,9 +23,13 @@ public class Maps {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name="name")
     private String name;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "description")
     private String description;
 

@@ -1,6 +1,7 @@
 package com.reservas.sucursalschedule;
 
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class ControllerSchedule {
     }
 
     @PostMapping
-    public Schedule create(@RequestBody Schedule schedule){
+    public Schedule create(@RequestBody @Valid Schedule schedule){
         return this.serviceSchedule.create(schedule);
     }
 

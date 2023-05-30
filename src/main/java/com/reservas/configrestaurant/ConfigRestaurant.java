@@ -6,6 +6,7 @@ import com.reservas.follow.Follow;
 import com.reservas.raiting.Raiting;
 import com.reservas.sucursal.Sucursal;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,36 +28,58 @@ public class ConfigRestaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name="name")
     private String name;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "slogan")
     private String slogan;
 
     @Column(name = "logo")
     private String logo;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "description")
     private String description;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name="address")
     private String address;
+
 
     @Column(name = "postalCode")
     private String postalCode;
 
+
+    @Min(value = 0,  message = "0% discount minimun")
+    @Max(value = 100,message = "100% discount maximun")
     @Column(name = "discount")
     private Integer discount;
+
 
     @Column(name = "media_raiting")
     private Double media_raiting;
 
+    @Column(name = "count_raiting")
+    private Integer count_raiting;
+
+    @Pattern(regexp = "/^[\\(]?[\\+]?(\\d{2}|\\d{3})[\\)]?[\\s]?((\\d{6}|\\d{8})|(\\d{3}[\\*\\.\\-\\s]){3}|(\\d{2}[\\*\\.\\-\\s]){4}|(\\d{4}[\\*\\.\\-\\s]){2})|\\d{8}|\\d{10}|\\d{12}$/;", message = "Format not reconized")
     @Column(name = "phone")
     private LocalDate phone;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "codeTrade")
     private String codeTrade;
 
+    @Email(message = "Invalid email")
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "email")
     private String email;
 

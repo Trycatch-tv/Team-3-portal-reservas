@@ -4,6 +4,7 @@ package com.reservas.sucursal;
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ControllerSucursal {
     }
 
     @PostMapping
-    public Sucursal create(@RequestBody Sucursal sucursal){
+    public Sucursal create(@RequestBody @Valid Sucursal sucursal){
         return this.serviceSucursal.create(sucursal);
     }
 

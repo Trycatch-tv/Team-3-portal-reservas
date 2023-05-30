@@ -3,6 +3,7 @@ package com.reservas.sucursalmap;
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class ControllerMap {
     }
 
     @PostMapping
-    public Maps create(@RequestBody Maps maps){
+    public Maps create(@RequestBody @Valid Maps maps){
         return this.serviceMap.create(maps);
     }
 

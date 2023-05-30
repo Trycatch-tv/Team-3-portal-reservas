@@ -3,6 +3,9 @@ package com.reservas.dish;
 import com.reservas.categorydish.CategoryDish;
 import com.reservas.configrestaurant.ConfigRestaurant;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -22,15 +25,22 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="name", unique = true)
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
+    @Column(name="name")
     private String name;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "description")
     private String description;
 
+    @PositiveOrZero
     @Column(name = "price")
-    private String price;
+    private Double price;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "image")
     private String image;
 

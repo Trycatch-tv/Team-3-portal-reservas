@@ -1,6 +1,7 @@
 package com.reservas.categorydish;
 
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class ControllerCategoryDish {
         return this.serviceCategoryDish.show(id); }
 
     @PostMapping
-    public CategoryDish create(@RequestBody CategoryDish categoryDish) { return this.serviceCategoryDish.create(categoryDish); }
+    public CategoryDish create(@RequestBody @Valid CategoryDish categoryDish) { return this.serviceCategoryDish.create(categoryDish); }
 
     @PutMapping
     public CategoryDish edit(@RequestBody CategoryDish categoryDish){ return this.serviceCategoryDish.edit(categoryDish); }

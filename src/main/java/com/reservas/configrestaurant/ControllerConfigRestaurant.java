@@ -1,6 +1,7 @@
 package com.reservas.configrestaurant;
 
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class ControllerConfigRestaurant {
     public ConfigRestaurant show(@PathVariable Long id)throws NullResponseNotFoundException { return this.serviceConfigRestaurant.show(id); }
 
     @PostMapping
-    public ConfigRestaurant create(@RequestBody ConfigRestaurant configRestaurant){ return this.serviceConfigRestaurant.create(configRestaurant); }
+    public ConfigRestaurant create(@RequestBody @Valid ConfigRestaurant configRestaurant){ return this.serviceConfigRestaurant.create(configRestaurant); }
 
     @PutMapping
     public ConfigRestaurant edit(@RequestBody ConfigRestaurant configRestaurant){ return this.serviceConfigRestaurant.edit(configRestaurant); }

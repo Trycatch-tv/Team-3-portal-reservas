@@ -2,6 +2,8 @@ package com.reservas.state;
 
 import com.reservas.booking.Booking;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,9 +25,13 @@ public class States {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Date requerid")
+    @NotNull(message = "Not possible null")
     @Column(name="name", unique = true)
     private String name;
 
+    @NotBlank(message = "Date requerid")
+    @NotNull(message = "Not possible null")
     @Column(name = "description")
     private String description;
 

@@ -8,7 +8,9 @@ import com.reservas.profile.Profile;
 import com.reservas.raiting.Raiting;
 import com.reservas.role.Roles;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -29,7 +31,9 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Email(message = "Invalid email")
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name="email")
     private String email;
 

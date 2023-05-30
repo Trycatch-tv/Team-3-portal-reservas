@@ -3,6 +3,8 @@ package com.reservas.detailraiting;
 import com.reservas.client.Client;
 import com.reservas.raiting.Raiting;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,6 +25,8 @@ public class DetailRaiting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "comments")
     private String comments;
 

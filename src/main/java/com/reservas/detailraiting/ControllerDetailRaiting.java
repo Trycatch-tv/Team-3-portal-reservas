@@ -3,6 +3,7 @@ package com.reservas.detailraiting;
 import com.reservas.autority.Authority;
 import com.reservas.autority.ServiceAuthority;
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class ControllerDetailRaiting {
     }
 
     @PostMapping
-    public DetailRaiting create(@RequestBody DetailRaiting detailRaiting){
+    public DetailRaiting create(@RequestBody @Valid DetailRaiting detailRaiting){
         return this.serviceDetailRaiting.create(detailRaiting);
     }
 

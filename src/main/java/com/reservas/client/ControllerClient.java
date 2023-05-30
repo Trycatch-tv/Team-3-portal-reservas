@@ -1,6 +1,7 @@
 package com.reservas.client;
 
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class ControllerClient {
     public Client show(@PathVariable Long id)throws NullResponseNotFoundException { return this.serviceClient.show(id); }
 
     @PostMapping
-    public Client create(@RequestBody Client client) {
+    public Client create(@RequestBody @Valid Client client) {
         System.out.println(client.toString());
         return this.serviceClient.create(client); }
 

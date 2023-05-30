@@ -4,6 +4,7 @@ package com.reservas.state;
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ControllerState {
     }
 
     @PostMapping
-    public States create(@RequestBody States states){
+    public States create(@RequestBody @Valid States states){
         return this.serviceState.create(states);
     }
 

@@ -4,6 +4,7 @@ package com.reservas.profile;
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ControllerProfile {
     }
 
     @PostMapping
-    public Profile create(@RequestBody Profile profile){
+    public Profile create(@RequestBody @Valid Profile profile){
         return this.serviceProfile.create(profile);
     }
 

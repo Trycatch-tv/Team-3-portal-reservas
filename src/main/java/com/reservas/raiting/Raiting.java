@@ -4,6 +4,10 @@ import com.reservas.client.Client;
 import com.reservas.configrestaurant.ConfigRestaurant;
 import com.reservas.detailraiting.DetailRaiting;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,9 +28,13 @@ public class Raiting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Min(value = 0,message = "Minimun 0")
+    @Max(value = 0,message = "Maximun 10")
     @Column(name="score")
     private Integer score;
 
+    @NotBlank(message = "Date requerid")
+    @NotNull(message = "Not possible null")
     @Column(name = "comments")
     private String comments;
 

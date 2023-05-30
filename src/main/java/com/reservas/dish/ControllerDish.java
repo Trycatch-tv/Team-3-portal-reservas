@@ -4,6 +4,7 @@ package com.reservas.dish;
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class ControllerDish {
     }
 
     @PostMapping
-    public Dish create(@RequestBody Dish dish){
+    public Dish create(@RequestBody @Valid Dish dish){
         return this.serviceDish.create(dish);
     }
 

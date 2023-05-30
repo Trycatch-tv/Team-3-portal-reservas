@@ -3,6 +3,7 @@ package com.reservas.raiting;
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class ControllerRaiting {
     }
 
     @PostMapping
-    public Raiting create(@RequestBody Raiting raiting){
+    public Raiting create(@RequestBody @Valid Raiting raiting){
         return this.serviceRaiting.create(raiting);
     }
 

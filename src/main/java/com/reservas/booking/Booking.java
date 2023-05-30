@@ -5,10 +5,11 @@ import com.reservas.state.States;
 import com.reservas.sucursal.Sucursal;
 import com.reservas.table.TableRest;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,15 +28,21 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @NotBlank(message = "Date requerid")
+    @NotNull(message = "Time not possible null")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name="dateBook")
     private LocalDate dateBook;
 
+    @Positive(message = "Only positive numbers")
+    @Pattern(regexp = "^[0-9]{1,2}$", message = "Minimum 1, maximun 99")
     @Column(name="people")
     private Integer people;
 
+
     @Column(name = "timeBook")
     private LocalTime timeBook;
+
 
     @Column(name = "origin")
     private String origin;

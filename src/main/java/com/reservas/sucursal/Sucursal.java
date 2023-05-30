@@ -6,6 +6,9 @@ import com.reservas.sucursalmap.Maps;
 import com.reservas.sucursalschedule.Schedule;
 import com.reservas.table.TableRest;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,47 +30,57 @@ public class Sucursal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name="name")
     private String name;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "observation")
     private String observation;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name="address")
     private String address;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name="location")
     private String location;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "postalCode")
     private String postalCode;
 
+    @Pattern(regexp = "/^[\\(]?[\\+]?(\\d{2}|\\d{3})[\\)]?[\\s]?((\\d{6}|\\d{8})|(\\d{3}[\\*\\.\\-\\s]){3}|(\\d{2}[\\*\\.\\-\\s]){4}|(\\d{4}[\\*\\.\\-\\s]){2})|\\d{8}|\\d{10}|\\d{12}$/;", message = "Format not reconized")
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "smoking")
+    @Column(name = "smoking",columnDefinition = "boolean default false")
     private Boolean smoking;
 
-    @Column(name = "in_side")
+
+    @Column(name = "in_side",columnDefinition = "boolean default true")
     private Boolean in_side;
 
-    @Column(name = "out_side")
-    private Boolean out_side;
-
-
-    @Column(name = "diffTimeBooking")
-    private LocalTime diffTimeBooking;
-
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "timeSeat")
     private LocalTime timeSeat;
 
-    @Column(name = "overBooking")
+    @Column(name = "overBooking",columnDefinition = "boolean default false")
     private Boolean overBooking;
 
+    @NotBlank(message = "Name is required")
+    @NotNull(message = "Not null")
     @Column(name = "maxWaiting")
     private LocalTime maxWaiting;
 
-    @Column(name = "status")
+
+    @Column(name = "status",columnDefinition = "boolean default true")
     private Boolean status;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)

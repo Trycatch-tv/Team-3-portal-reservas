@@ -3,6 +3,7 @@ package com.reservas.table;
 import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class ControllerTable {
     }
 
     @PostMapping
-    public TableRest create(@RequestBody TableRest tableRest){
+    public TableRest create(@RequestBody @Valid TableRest tableRest){
         return this.serviceTable.create(tableRest);
     }
 
