@@ -30,7 +30,7 @@ public class Dish {
     @Column(name="name")
     private String name;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Description is required")
     @NotNull(message = "Not null")
     @Column(name = "description")
     private String description;
@@ -39,7 +39,7 @@ public class Dish {
     @Column(name = "price")
     private Double price;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Image is required")
     @NotNull(message = "Not null")
     @Column(name = "image")
     private String image;

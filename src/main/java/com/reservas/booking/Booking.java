@@ -31,20 +31,22 @@ public class Booking {
     @NotBlank(message = "Date requerid")
     @NotNull(message = "Time not possible null")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Column(name="dateBook")
+    @Column(name="date_book")
     private LocalDate dateBook;
 
     @Positive(message = "Only positive numbers")
-    @Pattern(regexp = "^[0-9]{1,2}$", message = "Minimum 1, maximun 99")
+    @Min(value = 1,message = "Mínumun 1 people")
+    @NotNull(message = "Not null numbers people")
     @Column(name="people")
     private Integer people;
 
-
-    @Column(name = "timeBook")
+    @NotNull(message = "Not null")
+    @NotBlank(message = "Data time is necesary")
+    @Column(name = "time_book")
     private LocalTime timeBook;
 
 
-    @Column(name = "origin")
+    @Column(name = "origin",columnDefinition = "varchar(255) default 'Local'")
     private String origin;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

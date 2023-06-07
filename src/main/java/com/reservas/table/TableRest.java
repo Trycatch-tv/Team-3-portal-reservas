@@ -28,7 +28,7 @@ public class TableRest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Date requerid")
+    @NotBlank(message = "Name is requerid")
     @NotNull(message = "Not possible null")
     @Column(name="name", unique = true)
     private String name;

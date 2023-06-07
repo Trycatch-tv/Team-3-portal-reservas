@@ -5,43 +5,43 @@ import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/states")
 public class ControllerState {
-    @Autowired
-    private final ServiceState serviceState;
-    @Autowired
-    public ControllerState(ServiceState serviceState) {
-        this.serviceState = serviceState;
-    }
 
+    private final ServiceState serviceState;
     @GetMapping
-    public List<States> list(){
-        return this.serviceState.list();
+    public ResponseEntity<List<States>> list(){
+
+        return ResponseEntity.ok(this.serviceState.list());
     }
     @GetMapping("/{id}")
-    public States show(@PathVariable Long id)throws NullResponseNotFoundException {
-        return this.serviceState.show(id);
+    public ResponseEntity<States> show(@PathVariable Long id)throws NullResponseNotFoundException {
+        return ResponseEntity.ok(this.serviceState.show(id));
     }
 
     @PostMapping
-    public States create(@RequestBody @Valid States states){
-        return this.serviceState.create(states);
+    public  ResponseEntity<States> create(@RequestBody @Valid States states){
+        return ResponseEntity.ok(this.serviceState.create(states));
     }
 
     @PutMapping
-    public States edit(@RequestBody States states){
-        return this.serviceState.edit(states);
+    public  ResponseEntity<States> edit(@RequestBody States states) throws NullResponseNotFoundException {
+        return ResponseEntity.ok(this.serviceState.edit(states));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
+    public  ResponseEntity<?> delete(@PathVariable Long id) throws NullResponseNotFoundException{
         this.serviceState.delete(id);
+        return ResponseEntity.ok("State deleted");
     }
 }

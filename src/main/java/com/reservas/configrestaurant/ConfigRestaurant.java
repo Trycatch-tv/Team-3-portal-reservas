@@ -41,44 +41,47 @@ public class ConfigRestaurant {
     @Column(name = "logo")
     private String logo;
 
+    @Column(name = "banner")
+    private String banner;
+
     @NotBlank(message = "Name is required")
     @NotNull(message = "Not null")
     @Column(name = "description")
     private String description;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Address is required")
     @NotNull(message = "Not null")
     @Column(name="address")
     private String address;
 
 
-    @Column(name = "postalCode")
+    @Column(name = "postal_code")
     private String postalCode;
 
 
     @Min(value = 0,  message = "0% discount minimun")
     @Max(value = 100,message = "100% discount maximun")
     @Column(name = "discount")
-    private Integer discount;
+    private Double discount;
 
 
     @Column(name = "media_raiting")
-    private Double media_raiting;
+    private Double mediaRaiting;
 
     @Column(name = "count_raiting")
-    private Integer count_raiting;
+    private Double countRaiting;
 
     @Pattern(regexp = "/^[\\(]?[\\+]?(\\d{2}|\\d{3})[\\)]?[\\s]?((\\d{6}|\\d{8})|(\\d{3}[\\*\\.\\-\\s]){3}|(\\d{2}[\\*\\.\\-\\s]){4}|(\\d{4}[\\*\\.\\-\\s]){2})|\\d{8}|\\d{10}|\\d{12}$/;", message = "Format not reconized")
     @Column(name = "phone")
     private LocalDate phone;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Code ecommerce is required")
     @NotNull(message = "Not null")
-    @Column(name = "codeTrade")
+    @Column(name = "code_trade")
     private String codeTrade;
 
     @Email(message = "Invalid email")
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Email is required")
     @NotNull(message = "Not null")
     @Column(name = "email")
     private String email;

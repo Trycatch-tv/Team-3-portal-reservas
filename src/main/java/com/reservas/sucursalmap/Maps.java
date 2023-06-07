@@ -1,5 +1,6 @@
 package com.reservas.sucursalmap;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.reservas.sucursal.Sucursal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -28,12 +29,13 @@ public class Maps {
     @Column(name="name")
     private String name;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Description is required")
     @NotNull(message = "Not null")
     @Column(name = "description")
     private String description;
 
     @OneToOne(mappedBy = "maps", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value="maps")
     private Sucursal sucursal;
 
     @CreationTimestamp

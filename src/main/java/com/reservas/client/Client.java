@@ -1,5 +1,6 @@
 package com.reservas.client;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.reservas.booking.Booking;
 import com.reservas.configrestaurant.ConfigRestaurant;
 import com.reservas.detailraiting.DetailRaiting;
@@ -41,6 +42,7 @@ public class Client {
     private String password;
 
     @OneToOne(mappedBy = "client", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value="client")
     private Profile profile;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

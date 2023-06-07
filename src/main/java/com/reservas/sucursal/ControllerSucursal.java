@@ -5,43 +5,42 @@ import com.reservas.booking.Booking;
 import com.reservas.booking.ServiceBooking;
 import com.reservas.error.NullResponseNotFoundException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/sucursal")
 public class ControllerSucursal {
-    @Autowired
-    private final ServiceSucursal serviceSucursal;
-    @Autowired
-    public ControllerSucursal(ServiceSucursal serviceSucursal) {
-        this.serviceSucursal = serviceSucursal;
-    }
 
+    private final ServiceSucursal serviceSucursal;
     @GetMapping
-    public List<Sucursal> list(){
-        return this.serviceSucursal.list();
+    public ResponseEntity<List<Sucursal>> list(){
+        return ResponseEntity.ok(this.serviceSucursal.list());
     }
     @GetMapping("/{id}")
-    public Sucursal show(@PathVariable Long id)throws NullResponseNotFoundException {
-        return this.serviceSucursal.show(id);
+    public ResponseEntity<Sucursal> show(@PathVariable Long id)throws NullResponseNotFoundException {
+        return ResponseEntity.ok(this.serviceSucursal.show(id));
     }
 
     @PostMapping
-    public Sucursal create(@RequestBody @Valid Sucursal sucursal){
-        return this.serviceSucursal.create(sucursal);
+    public ResponseEntity<Sucursal> create(@RequestBody @Valid Sucursal sucursal){
+        return ResponseEntity.ok(this.serviceSucursal.create(sucursal));
     }
 
     @PutMapping
-    public Sucursal edit(@RequestBody Sucursal sucursal){
-        return this.serviceSucursal.edit(sucursal);
+    public ResponseEntity<Sucursal> edit(@RequestBody Sucursal sucursal)throws NullResponseNotFoundException{
+        return ResponseEntity.ok(this.serviceSucursal.edit(sucursal));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id)throws NullResponseNotFoundException{
         this.serviceSucursal.delete(id);
+        return ResponseEntity.ok("Sucursal deleted");
     }
 }

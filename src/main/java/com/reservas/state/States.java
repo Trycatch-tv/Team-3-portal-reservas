@@ -25,12 +25,12 @@ public class States {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Date requerid")
+    @NotBlank(message = "Name requerid")
     @NotNull(message = "Not possible null")
     @Column(name="name", unique = true)
     private String name;
 
-    @NotBlank(message = "Date requerid")
+    @NotBlank(message = "Description requerid")
     @NotNull(message = "Not possible null")
     @Column(name = "description")
     private String description;

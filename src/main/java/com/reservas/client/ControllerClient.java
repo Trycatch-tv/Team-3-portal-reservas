@@ -2,37 +2,42 @@ package com.reservas.client;
 
 import com.reservas.error.NullResponseNotFoundException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("api/client")
 public class ControllerClient {
 
-    @Autowired
     private final ServiceClient serviceClient;
 
-    @Autowired
-    public ControllerClient(ServiceClient serviceClient){ this.serviceClient = serviceClient; }
-
     @GetMapping
-    public List<Client> list(){ return this.serviceClient.list(); }
+    public ResponseEntity<List<Client>> list(){
+        return ResponseEntity.ok(this.serviceClient.list());
+    }
 
     @GetMapping("/{id}")
-    public Client show(@PathVariable Long id)throws NullResponseNotFoundException { return this.serviceClient.show(id); }
+    public ResponseEntity<Client> show(@PathVariable Long id)throws NullResponseNotFoundException {
+        return ResponseEntity.ok(this.serviceClient.show(id));
+    }
 
     @PostMapping
-    public Client create(@RequestBody @Valid Client client) {
-        System.out.println(client.toString());
-        return this.serviceClient.create(client); }
+    public ResponseEntity<Client> create(@RequestBody @Valid Client client) {
+        return ResponseEntity.ok(this.serviceClient.create(client));
+    }
 
     @PutMapping
-    public Client edit(@RequestBody Client client) { return this.serviceClient.edit(client); }
+    public ResponseEntity<Client> edit(@RequestBody Client client)throws NullResponseNotFoundException {
+        return ResponseEntity.ok(this.serviceClient.edit(client)); }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) { this.delete(id); }
+    public ResponseEntity<?> delete(@PathVariable Long id) throws NullResponseNotFoundException{
+        return ResponseEntity.ok("Client deleted"); }
 
 }

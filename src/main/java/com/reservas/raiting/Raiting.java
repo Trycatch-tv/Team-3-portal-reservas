@@ -29,11 +29,11 @@ public class Raiting {
     private Long id;
 
     @Min(value = 0,message = "Minimun 0")
-    @Max(value = 0,message = "Maximun 10")
+    @Max(value = 10,message = "Maximun 10")
     @Column(name="score")
     private Integer score;
 
-    @NotBlank(message = "Date requerid")
+    @NotBlank(message = "Commnet requerid")
     @NotNull(message = "Not possible null")
     @Column(name = "comments")
     private String comments;

@@ -3,6 +3,7 @@ package com.reservas.detailraiting;
 import com.reservas.client.Client;
 import com.reservas.client.RepositoryClient;
 import com.reservas.error.NullResponseNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ServiceDetailRaiting {
 
-    @Autowired
     private final RepositoryDetailRaiting repositoryDetailRaiting;
-
-    @Autowired
-    public ServiceDetailRaiting(RepositoryDetailRaiting repositoryDetailRaiting){ this.repositoryDetailRaiting = repositoryDetailRaiting; }
 
     public List<DetailRaiting> list(){ return this.repositoryDetailRaiting.findAll(); }
 
@@ -29,7 +27,14 @@ public class ServiceDetailRaiting {
 
     public DetailRaiting create(DetailRaiting detailRaiting){ return this.repositoryDetailRaiting.save(detailRaiting); }
 
-    public DetailRaiting edit(DetailRaiting detailRaiting) { return this.repositoryDetailRaiting.save(detailRaiting); }
+    public DetailRaiting edit(DetailRaiting detailRaiting) throws NullResponseNotFoundException {
+        Optional<DetailRaiting> detail = Optional.of(this.repositoryDetailRaiting.findById(detailRaiting.getId()).orElseThrow(()->new NullResponseNotFoundException("Data not available")));
+        //Validar entrada
+        return this.repositoryDetailRaiting.save(detailRaiting);
+    }
 
-    public void delete(Long id){ this.repositoryDetailRaiting.deleteById(id); }
+    public void delete(Long id) throws NullResponseNotFoundException {
+        Optional<DetailRaiting> detail = Optional.of(this.repositoryDetailRaiting.findById(id).orElseThrow(()->new NullResponseNotFoundException("Data not available")));
+        this.repositoryDetailRaiting.deleteById(id);
+    }
 }

@@ -25,7 +25,7 @@ public class DetailRaiting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Comment is required")
     @NotNull(message = "Not null")
     @Column(name = "comments")
     private String comments;

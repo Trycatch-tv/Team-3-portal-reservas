@@ -24,17 +24,17 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Day is required")
     @NotNull(message = "Not null")
     @Column(name="day")
     private String day;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Open is required")
     @NotNull(message = "Not null")
     @Column(name = "startService")
     private LocalTime startService;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "End is required")
     @NotNull(message = "Not null")
     @Column(name="endService")
     private LocalTime endService;

@@ -2,44 +2,46 @@ package com.reservas.booking;
 
 import com.reservas.error.NullResponseNotFoundException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(originPatterns = "*")
 @RequestMapping("api/booking")
 public class ControllerBooking {
-    @Autowired
+
     private final ServiceBooking serviceBooking;
-    @Autowired
-    public ControllerBooking(ServiceBooking serviceBooking) {
-        this.serviceBooking = serviceBooking;
-    }
 
     @GetMapping
-    public List<Booking> list(){
-        return this.serviceBooking.list();
+    public ResponseEntity<List<Booking>> list(){
+        return ResponseEntity.ok(this.serviceBooking.list());
     }
     @GetMapping("/{id}")
-    public Booking show(@PathVariable Long id) throws NullResponseNotFoundException {
-        return this.serviceBooking.show(id);
+    public ResponseEntity<Booking> show(@PathVariable Long id) throws NullResponseNotFoundException {
+        return ResponseEntity.ok(this.serviceBooking.show(id));
     }
 
     @PostMapping
-    public Booking create(@RequestBody @Valid Booking booking){
-        return this.serviceBooking.create(booking);
+    public ResponseEntity<Booking> create(@RequestBody @Valid Booking booking){
+        return ResponseEntity.ok(this.serviceBooking.create(booking));
     }
 
     @PutMapping
-    public Booking edit(@RequestBody Booking booking){
-        return this.serviceBooking.edit(booking);
+    public ResponseEntity<Booking> edit(@RequestBody Booking booking) throws NullResponseNotFoundException{
+        return ResponseEntity.ok(this.serviceBooking.edit(booking));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-        this.serviceBooking.delete(id);
+    public ResponseEntity<?> delete(@PathVariable Long id) throws NullResponseNotFoundException {
+            this.serviceBooking.delete(id);
+        return ResponseEntity.ok("Delete confirm");
     }
 
 }

@@ -2,36 +2,42 @@ package com.reservas.categorydish;
 
 import com.reservas.error.NullResponseNotFoundException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("api/category-dish")
 public class ControllerCategoryDish {
 
-    @Autowired
     private final ServiceCategoryDish serviceCategoryDish;
-
-    @Autowired
-    public ControllerCategoryDish(ServiceCategoryDish serviceCategoryDish){
-        this.serviceCategoryDish = serviceCategoryDish;
+    @GetMapping
+    public ResponseEntity<List<CategoryDish>> list(){
+        return ResponseEntity.ok(this.serviceCategoryDish.list());
     }
 
-    @GetMapping
-    public List<CategoryDish> list(){ return this.serviceCategoryDish.list(); }
-
     @GetMapping("/{id}")
-    public CategoryDish show(@PathVariable Long id)throws NullResponseNotFoundException {
-        return this.serviceCategoryDish.show(id); }
+    public ResponseEntity<CategoryDish> show(@PathVariable Long id)throws NullResponseNotFoundException {
+        return ResponseEntity.ok(this.serviceCategoryDish.show(id)); }
 
     @PostMapping
-    public CategoryDish create(@RequestBody @Valid CategoryDish categoryDish) { return this.serviceCategoryDish.create(categoryDish); }
+    public ResponseEntity<CategoryDish> create(@RequestBody @Valid CategoryDish categoryDish) {
+        return ResponseEntity.ok(this.serviceCategoryDish.create(categoryDish));
+    }
 
     @PutMapping
-    public CategoryDish edit(@RequestBody CategoryDish categoryDish){ return this.serviceCategoryDish.edit(categoryDish); }
+    public ResponseEntity<CategoryDish> edit(@RequestBody CategoryDish categoryDish) throws NullResponseNotFoundException {
+        return ResponseEntity.ok(this.serviceCategoryDish.edit(categoryDish)); }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) throws NullResponseNotFoundException{
+        this.serviceCategoryDish.delete(id);
+        return ResponseEntity.ok("Deleted category dish.");
+    }
 }

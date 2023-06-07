@@ -35,46 +35,52 @@ public class Sucursal {
     @Column(name="name")
     private String name;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Cooment is required")
     @NotNull(message = "Not null")
     @Column(name = "observation")
     private String observation;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Address is required")
     @NotNull(message = "Not null")
     @Column(name="address")
     private String address;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Location is required")
     @NotNull(message = "Not null")
     @Column(name="location")
     private String location;
 
-    @NotBlank(message = "Name is required")
-    @NotNull(message = "Not null")
     @Column(name = "postalCode")
     private String postalCode;
 
+    @NotBlank(message = "Phone is required")
+    @NotNull(message = "Not null")
     @Pattern(regexp = "/^[\\(]?[\\+]?(\\d{2}|\\d{3})[\\)]?[\\s]?((\\d{6}|\\d{8})|(\\d{3}[\\*\\.\\-\\s]){3}|(\\d{2}[\\*\\.\\-\\s]){4}|(\\d{4}[\\*\\.\\-\\s]){2})|\\d{8}|\\d{10}|\\d{12}$/;", message = "Format not reconized")
     @Column(name = "phone")
     private String phone;
 
+    @NotBlank(message = "Smoke is required Yes/No")
+    @NotNull(message = "Not null")
     @Column(name = "smoking",columnDefinition = "boolean default false")
     private Boolean smoking;
 
 
-    @Column(name = "in_side",columnDefinition = "boolean default true")
-    private Boolean in_side;
+    @NotBlank(message = "Do you have Terraza")
+    @NotNull(message = "Not null")
+    @Column(name = "terraza",columnDefinition = "boolean default true")
+    private Boolean terraza;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Time to seat is required")
     @NotNull(message = "Not null")
     @Column(name = "timeSeat")
     private LocalTime timeSeat;
 
+    @NotNull(message = "Not null")
+    @NotBlank(message = "Is possible over bokking? Yes/Noy")
     @Column(name = "overBooking",columnDefinition = "boolean default false")
     private Boolean overBooking;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Wich time to wait reserve in minutes")
     @NotNull(message = "Not null")
     @Column(name = "maxWaiting")
     private LocalTime maxWaiting;

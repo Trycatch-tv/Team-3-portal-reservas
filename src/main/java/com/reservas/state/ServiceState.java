@@ -1,6 +1,7 @@
 package com.reservas.state;
 
 import com.reservas.error.NullResponseNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,16 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ServiceState {
 
-    @Autowired
     private final RepositoryState repositoryStates;
-
-    @Autowired
-    public ServiceState (RepositoryState repositoryStates){
-        this.repositoryStates = repositoryStates;
-    }
-
     public List<States> list(){ return this.repositoryStates.findAll(); }
 
     public States show(Long id)throws NullResponseNotFoundException {
@@ -25,12 +20,21 @@ public class ServiceState {
         if(!states.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        return this.repositoryStates.findById(id).get(); }
+        return states.get(); }
 
     public States create(States states){ return this.repositoryStates.save(states); }
 
-    public States edit(States states){ return this.repositoryStates.save(states); }
+    public States edit(States states)throws NullResponseNotFoundException{
+        Optional<States> state = this.repositoryStates.findById(states.getId());
+        if(!state.isPresent()){
+            throw new NullResponseNotFoundException("Data not available");
+        }
+        //Validar entrada
+        return this.repositoryStates.save(state.get()); }
 
-    public void delete(Long id){ this.delete(id); }
+    public void delete(Long id) throws NullResponseNotFoundException {
+        Optional<States> states = Optional.of(this.repositoryStates.findById(id).orElseThrow(()->new NullResponseNotFoundException("Data not available")));
+        this.repositoryStates.deleteById(id);
+    }
 
 }
