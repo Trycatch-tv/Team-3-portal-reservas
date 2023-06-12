@@ -1,7 +1,8 @@
 package com.reservas.role;
 
-import com.reservas.autority.Authority;
-import com.reservas.client.Client;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.reservas.client.Clientes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,8 +21,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "roles")
-public class Roles {
+@Table(name = "roless")
+public class Roless {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,15 +37,11 @@ public class Roles {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    private List<Client> client;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "role_authority", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-            ,inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
-    private List<Authority> authorities;
-
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,targetEntity = Clientes.class)
+    @JoinTable(name = "roless_clientes", joinColumns = @JoinColumn(name = "roless_id", referencedColumnName = "id")
+            ,inverseJoinColumns = @JoinColumn(name = "cliente_id", referencedColumnName = "id"))
+    private List<Clientes> clientes;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

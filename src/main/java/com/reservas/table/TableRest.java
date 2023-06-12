@@ -1,5 +1,6 @@
 package com.reservas.table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.reservas.booking.Booking;
 import com.reservas.sucursal.Sucursal;
 import jakarta.persistence.*;
@@ -49,11 +50,13 @@ public class TableRest {
     @Column(name = "status",columnDefinition = "boolean default true")
     private Boolean status;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Sucursal.class,optional = false)
     @JoinColumn(name = "sucursal_id", referencedColumnName = "id")
     private Sucursal sucursal;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Booking.class)
     @JoinColumn(name = "tables_id", referencedColumnName = "id")
     private List<Booking> bookings;
 

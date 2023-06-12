@@ -6,6 +6,7 @@ import com.reservas.error.NullResponseNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +16,11 @@ import java.util.Optional;
 public class ServiceTable {
 
     private final RepositoryTable repositoryTable;
+
+    @Transactional(readOnly = true)
     public List<TableRest> list(){ return this.repositoryTable.findAll(); }
 
+    @Transactional(readOnly = true)
     public TableRest show(Long id) throws NullResponseNotFoundException {
         Optional<TableRest> tableRest = this.repositoryTable.findById(id);
         if(!tableRest.isPresent()){
@@ -24,8 +28,10 @@ public class ServiceTable {
         }
         return tableRest.get(); }
 
+    @Transactional
     public TableRest create(TableRest tableRest){ return this.repositoryTable.save(tableRest); }
 
+    @Transactional
     public TableRest edit(TableRest tableRest) throws NullResponseNotFoundException {
         Optional<TableRest> table = this.repositoryTable.findById(tableRest.getId());
         if(!table.isPresent()){
@@ -34,6 +40,7 @@ public class ServiceTable {
         //Validar entrada
         return this.repositoryTable.save(table.get()); }
 
+    @Transactional
     public void delete(Long id) throws NullResponseNotFoundException {
         Optional<TableRest> tableRest = this.repositoryTable.findById(id);
         if(!tableRest.isPresent()){

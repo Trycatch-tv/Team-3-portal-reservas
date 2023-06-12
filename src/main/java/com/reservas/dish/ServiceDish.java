@@ -6,6 +6,7 @@ import com.reservas.state.States;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +16,10 @@ import java.util.Optional;
 public class ServiceDish {
     private final RepositoryDish repositoryDish;
 
+    @Transactional(readOnly = true)
     public List<Dish> list(){ return this.repositoryDish.findAll(); }
 
+    @Transactional(readOnly = true)
     public Dish show(Long id) throws NullResponseNotFoundException {
         Optional<Dish> dish = this.repositoryDish.findById(id);
         if(!dish.isPresent()){
@@ -24,8 +27,10 @@ public class ServiceDish {
         }
         return dish.get(); }
 
+    @Transactional
     public Dish create(Dish dish){ return this.repositoryDish.save(dish); }
 
+    @Transactional
     public Dish edit(Dish dish) throws NullResponseNotFoundException{
         Optional<Dish> dishes = this.repositoryDish.findById(dish.getId());
         if(!dishes.isPresent()){
@@ -34,6 +39,7 @@ public class ServiceDish {
         //Validar entrada
         return this.repositoryDish.save(dishes.get()); }
 
+    @Transactional
     public void delete(Long id) throws NullResponseNotFoundException {
         Optional<Dish> dish = this.repositoryDish.findById(id);
         if(!dish.isPresent()){

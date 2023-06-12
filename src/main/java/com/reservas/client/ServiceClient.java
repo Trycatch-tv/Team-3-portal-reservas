@@ -2,8 +2,8 @@ package com.reservas.client;
 
 import com.reservas.error.NullResponseNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,19 +13,23 @@ import java.util.Optional;
 public class ServiceClient {
     private final RepositoryClient repositoryClient;
 
-    public List<Client> list(){ return this.repositoryClient.findAll(); }
+    @Transactional(readOnly = true)
+    public List<Clientes> list(){ return this.repositoryClient.findAll(); }
 
-    public Client show(Long id) throws NullResponseNotFoundException{
-        Optional<Client> client = this.repositoryClient.findById(id);
+    @Transactional(readOnly = true)
+    public Clientes show(Long id) throws NullResponseNotFoundException{
+        Optional<Clientes> client = this.repositoryClient.findById(id);
         if(!client.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
         return client.get();}
 
-    public Client create(Client client){ return this.repositoryClient.save(client); }
+    @Transactional
+    public Clientes create(Clientes client){ return this.repositoryClient.save(client); }
 
-    public Client edit(Client client) throws NullResponseNotFoundException{
-        Optional<Client> clientOpt = this.repositoryClient.findById(client.getId());
+    @Transactional
+    public Clientes edit(Clientes client) throws NullResponseNotFoundException{
+        Optional<Clientes> clientOpt = this.repositoryClient.findById(client.getId());
         if(!clientOpt.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
@@ -33,8 +37,9 @@ public class ServiceClient {
         return this.repositoryClient.save(clientOpt.get());
     }
 
+    @Transactional
     public void delete(Long id)throws NullResponseNotFoundException{
-        Optional<Client> client = this.repositoryClient.findById(id);
+        Optional<Clientes> client = this.repositoryClient.findById(id);
         if(!client.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }

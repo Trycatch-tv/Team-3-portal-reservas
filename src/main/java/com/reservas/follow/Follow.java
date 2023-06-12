@@ -1,6 +1,7 @@
 package com.reservas.follow;
 
-import com.reservas.client.Client;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.reservas.client.Clientes;
 import com.reservas.configrestaurant.ConfigRestaurant;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,12 +24,14 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client client;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Clientes.class,optional = false)
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
+    private Clientes clientes;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "configRestaurant_id", referencedColumnName = "id")
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = ConfigRestaurant.class,optional = false)
+    @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private ConfigRestaurant configRestaurant;
 
     @CreationTimestamp

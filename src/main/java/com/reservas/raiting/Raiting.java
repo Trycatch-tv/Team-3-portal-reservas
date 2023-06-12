@@ -1,6 +1,8 @@
 package com.reservas.raiting;
 
-import com.reservas.client.Client;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.reservas.client.Clientes;
 import com.reservas.configrestaurant.ConfigRestaurant;
 import com.reservas.detailraiting.DetailRaiting;
 import jakarta.persistence.*;
@@ -38,17 +40,20 @@ public class Raiting {
     @Column(name = "comments")
     private String comments;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = DetailRaiting.class)
     @JoinColumn(name = "raiting_id", referencedColumnName = "id")
     private List<DetailRaiting> detailRaitings;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "configRestaurant_id", referencedColumnName = "id")
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = ConfigRestaurant.class,optional = false)
+    @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private ConfigRestaurant configRestaurant;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client client;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Clientes.class)
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
+    private Clientes clientes;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

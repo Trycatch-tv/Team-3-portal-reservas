@@ -1,5 +1,6 @@
 package com.reservas.sucursalschedule;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.reservas.sucursal.Sucursal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -42,7 +43,8 @@ public class Schedule {
     @Column(name = "status",columnDefinition = "boolean default false")
     private Boolean status;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Sucursal.class, optional = false)
     @JoinColumn(name = "sucursal_id", referencedColumnName = "id")
     private Sucursal sucursal;
 

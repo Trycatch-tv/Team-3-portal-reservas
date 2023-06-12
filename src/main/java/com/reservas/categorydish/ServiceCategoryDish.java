@@ -5,6 +5,7 @@ import com.reservas.error.NullResponseNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,31 +16,45 @@ import java.util.Optional;
 public class ServiceCategoryDish {
     private final RepositoryCategoryDish repositoryCategoryDish;
 
-    public List<CategoryDish> list(){
+    @Transactional(readOnly = true)
+    public List<CategoryDish> list() {
         return this.repositoryCategoryDish.findAll();
     }
 
+    @Transactional(readOnly = true)
     public CategoryDish show(Long id) throws NullResponseNotFoundException {
-        Optional<CategoryDish> categoryDishOptional= this.repositoryCategoryDish.findById(id);
-        if(!categoryDishOptional.isPresent()){
+        Optional<CategoryDish> categoryDishOptional = this.repositoryCategoryDish.findById(id);
+        if (!categoryDishOptional.isPresent()) {
             throw new NullResponseNotFoundException("Data not available");
         }
-        return categoryDishOptional.get(); }
+        return categoryDishOptional.get();
+    }
 
-    public CategoryDish create(CategoryDish categoryDish){
+    @Transactional
+    public CategoryDish create(CategoryDish categoryDish) {
+        Optional<CategoryDish> categoryDish1 = findCategory(categoryDish.getName());
+        if (categoryDish1.isPresent()) {
+            return categoryDish;
+        }
         return this.repositoryCategoryDish.save(categoryDish);
     }
 
+    @Transactional
     public CategoryDish edit(CategoryDish categoryDish) throws NullResponseNotFoundException {
-        Optional<CategoryDish> category = Optional.of(this.repositoryCategoryDish.findById(categoryDish.getId()).orElseThrow(()->new NullResponseNotFoundException("Data not available")));
+        Optional<CategoryDish> category = Optional.of(this.repositoryCategoryDish.findById(categoryDish.getId()).orElseThrow(() -> new NullResponseNotFoundException("Data not available")));
         //Validar entrada
         return this.repositoryCategoryDish.save(category.get());
     }
 
-    public void delete(Long id) throws NullResponseNotFoundException{
-        Optional<CategoryDish> category = Optional.of(this.repositoryCategoryDish.findById(id).orElseThrow(()->new NullResponseNotFoundException("Data not available")));
+    @Transactional
+    public void delete(Long id) throws NullResponseNotFoundException {
+        Optional<CategoryDish> category = Optional.of(this.repositoryCategoryDish.findById(id).orElseThrow(() -> new NullResponseNotFoundException("Data not available")));
         this.repositoryCategoryDish.deleteById(id);
     }
 
+    public Optional<CategoryDish> findCategory(String name){
+        return this.repositoryCategoryDish.findByName(name);
+    };
 
 }
+

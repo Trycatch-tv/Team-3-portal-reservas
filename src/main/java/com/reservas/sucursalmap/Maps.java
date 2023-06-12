@@ -1,5 +1,6 @@
 package com.reservas.sucursalmap;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.reservas.sucursal.Sucursal;
 import jakarta.persistence.*;
@@ -34,8 +35,9 @@ public class Maps {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(mappedBy = "maps", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value="maps")
+    @JsonBackReference
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Sucursal.class, optional = false)
+    @JoinColumn(name = "sucursal_id", referencedColumnName = "id")
     private Sucursal sucursal;
 
     @CreationTimestamp
