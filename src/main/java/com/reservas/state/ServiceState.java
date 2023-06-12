@@ -1,6 +1,7 @@
 package com.reservas.state;
 
 import com.reservas.error.NullResponseNotFoundException;
+import com.reservas.role.Roless;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,10 @@ public class ServiceState {
         return states.get(); }
 
     @Transactional
-    public States create(States states){ return this.repositoryStates.save(states); }
+    public States create(States states) throws NullResponseNotFoundException {
+        Optional<States> states1 = Optional.of(findState(states.getName()).orElseThrow(()->new NullResponseNotFoundException("States already exists")));
+        return this.repositoryStates.save(states);
+    }
 
     @Transactional
     public States edit(States states)throws NullResponseNotFoundException{
@@ -35,7 +39,20 @@ public class ServiceState {
         if(!state.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+        if(states.getName() != null && !states.getName().isEmpty()){
+            if(!states.getName().equals(state.get().getName())){
+                Optional<States> newName = findState(states.getName());
+                if(newName.isPresent()){
+                    throw new NullResponseNotFoundException("State already exists");
+                }
+                state.get().setName(states.getName());
+            }
+
+        }
+
+        if(states.getDescription() != null && !states.getDescription().isEmpty()){
+            state.get().setDescription(states.getDescription());
+        }
         return this.repositoryStates.save(state.get()); }
 
     @Transactional
@@ -44,4 +61,6 @@ public class ServiceState {
         this.repositoryStates.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<States> findState(String name){ return this.repositoryStates.findByName(name);}
 }

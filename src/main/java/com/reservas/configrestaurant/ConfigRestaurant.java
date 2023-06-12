@@ -1,6 +1,7 @@
 package com.reservas.configrestaurant;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.client.Clientes;
 import com.reservas.dish.Dish;
@@ -88,7 +89,7 @@ public class ConfigRestaurant {
     @Column(name = "email")
     private String email;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Clientes.class)
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private Clientes clientes;
@@ -98,17 +99,17 @@ public class ConfigRestaurant {
     @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private List<Sucursal> sucursals;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Dish.class )
     @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private List<Dish> dishes;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Follow.class)
     @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private List<Follow> follows;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Raiting.class)
     @JoinColumn(name = "config_estaurant_id", referencedColumnName = "id")
     private List<Raiting> raiting;

@@ -27,7 +27,13 @@ public class ServiceRole {
         return roles.get(); }
 
     @Transactional
-    public Roless create(Roless roles){ return this.repositoryRole.save(roles); }
+    public Roless create(Roless roles) throws NullResponseNotFoundException {
+        Optional<Roless> roless = findRoles(roles.getName());
+        if(roless.isPresent()){
+            throw new NullResponseNotFoundException("Role already exists");
+        }
+        return this.repositoryRole.save(roles);
+    }
 
     @Transactional
     public Roless edit(Roless roles)throws NullResponseNotFoundException{
@@ -35,7 +41,22 @@ public class ServiceRole {
         if(!role.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+
+        if(roles.getName() != null && !roles.getName().isEmpty()){
+            if(!roles.getName().equals(role.get().getName())){
+                Optional<Roless> newName = findRoles(roles.getName());
+                if(newName.isPresent()){
+                    throw new NullResponseNotFoundException("Role already exists");
+                }
+                role.get().setName(roles.getName());
+            }
+
+        }
+
+        if(roles.getDescription() != null && !roles.getDescription().isEmpty()){
+            role.get().setDescription(roles.getDescription());
+        }
+
         return this.repositoryRole.save(role.get()); }
 
     @Transactional
@@ -45,5 +66,6 @@ public class ServiceRole {
             throw new NullResponseNotFoundException("Data not available");
         }
         this.repositoryRole.deleteById(id); }
-
+    @Transactional(readOnly = true)
+    public Optional<Roless> findRoles(String roles){ return this.repositoryRole.findByName(roles);}
 }

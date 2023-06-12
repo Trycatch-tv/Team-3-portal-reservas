@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,52 @@ public class ServiceSucursal {
         if(!sucursale.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+
+        if(sucursal.getName() != null && !sucursal.getName().isEmpty()){
+            sucursale.get().setName(sucursal.getName());
+        }
+
+        if(sucursal.getObservation() != null && !sucursal.getObservation().isEmpty()){
+            sucursale.get().setObservation(sucursal.getObservation());
+        }
+
+        if(sucursal.getAddress() != null && !sucursal.getAddress().isEmpty()){
+            sucursale.get().setAddress(sucursal.getAddress());
+        }
+
+        if(sucursal.getLocation() != null && !sucursal.getLocation().isEmpty()){
+            sucursale.get().setLocation(sucursal.getLocation());
+        }
+
+        if(sucursal.getPostalCode() != null && !sucursal.getPostalCode().isEmpty()){
+            sucursale.get().setPostalCode(sucursal.getPostalCode());
+        }
+
+        if(sucursal.getPhone() != null && !sucursal.getPhone().isEmpty()){
+            sucursale.get().setPhone(sucursal.getPhone());
+        }
+
+        if(sucursal.getTimeSeat() != null && sucursal.getTimeSeat().isAfter(LocalTime.of(0,30,0)) && sucursal.getTimeSeat().isBefore(LocalTime.of(23,59,50))){
+            sucursale.get().setTimeSeat(sucursal.getTimeSeat());
+        }
+
+        if(sucursal.getMaxWaiting() != null && sucursal.getMaxWaiting().isAfter(LocalTime.of(0,30,0)) && sucursal.getMaxWaiting().isBefore(LocalTime.of(23,59,50))){
+            sucursale.get().setMaxWaiting(sucursal.getMaxWaiting());
+        }
+        //Validar si llega valor boolean, terraza, overBooking,status
+        if(sucursal.getSmoking() != null && Boolean.valueOf(sucursal.getSmoking()) ){
+            sucursale.get().setSmoking(sucursal.getSmoking());
+        }
+        if(sucursal.getTerraza() != null && Boolean.valueOf(sucursal.getTerraza()) ){
+            sucursale.get().setTerraza(sucursal.getTerraza());
+        }
+        if(sucursal.getOverBooking() != null && Boolean.valueOf(sucursal.getOverBooking()) ){
+            sucursale.get().setOverBooking(sucursal.getOverBooking());
+        }
+        if(sucursal.getStatus() != null && Boolean.valueOf(sucursal.getStatus())){
+            sucursale.get().setStatus(sucursal.getStatus());
+        }
+
         return this.repositorySucursal.save(sucursale.get()); }
 
     @Transactional

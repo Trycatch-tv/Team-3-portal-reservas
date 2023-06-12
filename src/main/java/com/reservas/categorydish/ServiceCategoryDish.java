@@ -31,18 +31,30 @@ public class ServiceCategoryDish {
     }
 
     @Transactional
-    public CategoryDish create(CategoryDish categoryDish) {
+    public CategoryDish create(CategoryDish categoryDish) throws NullResponseNotFoundException {
         Optional<CategoryDish> categoryDish1 = findCategory(categoryDish.getName());
+        System.out.println(categoryDish.getName());
         if (categoryDish1.isPresent()) {
-            return categoryDish;
+            throw new NullResponseNotFoundException("Name already exists");
         }
+        System.out.println(categoryDish.getDescription());
         return this.repositoryCategoryDish.save(categoryDish);
     }
 
     @Transactional
     public CategoryDish edit(CategoryDish categoryDish) throws NullResponseNotFoundException {
         Optional<CategoryDish> category = Optional.of(this.repositoryCategoryDish.findById(categoryDish.getId()).orElseThrow(() -> new NullResponseNotFoundException("Data not available")));
-        //Validar entrada
+        if (categoryDish.getName() != null && !categoryDish.getName().isEmpty()){
+            if(!category.get().getName().equals(categoryDish.getName()) ){
+                Optional<CategoryDish> newName = findCategory(categoryDish.getName());
+                if (newName.isPresent()){ throw new NullResponseNotFoundException("Name already exists");}
+                category.get().setName(categoryDish.getName());
+            }
+        }
+
+        if (categoryDish.getDescription() != null && !categoryDish.getDescription().isEmpty()){
+            category.get().setDescription(categoryDish.getDescription());
+        }
         return this.repositoryCategoryDish.save(category.get());
     }
 
@@ -52,6 +64,7 @@ public class ServiceCategoryDish {
         this.repositoryCategoryDish.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     public Optional<CategoryDish> findCategory(String name){
         return this.repositoryCategoryDish.findByName(name);
     };

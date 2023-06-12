@@ -25,7 +25,13 @@ public class ServiceClient {
         return client.get();}
 
     @Transactional
-    public Clientes create(Clientes client){ return this.repositoryClient.save(client); }
+    public Clientes create(Clientes client) throws NullResponseNotFoundException {
+        Optional<Clientes> clientes = findEmail(client.getEmail());
+        if (clientes.isPresent()){
+            throw new NullResponseNotFoundException("Email already exist");
+        }
+        return this.repositoryClient.save(client);
+    }
 
     @Transactional
     public Clientes edit(Clientes client) throws NullResponseNotFoundException{
@@ -33,7 +39,19 @@ public class ServiceClient {
         if(!clientOpt.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+        if(client.getEmail() != null && !client.getEmail().isEmpty()){
+            if(!clientOpt.get().getEmail().equals(client.getEmail())){
+                Optional<Clientes> newEmailclientes = findEmail(client.getEmail());
+                if(newEmailclientes.isPresent()){
+                    throw new NullResponseNotFoundException("Email already exists");
+                }
+                clientOpt.get().setEmail(client.getEmail());
+            }
+        }
+        //Implementar passwordEcoder
+        if(client.getPassword() !=null && !client.getPassword().isEmpty()){
+            clientOpt.get().setPassword(client.getPassword());
+        }
         return this.repositoryClient.save(clientOpt.get());
     }
 
@@ -44,4 +62,6 @@ public class ServiceClient {
             throw new NullResponseNotFoundException("Data not available");
         }
         this.repositoryClient.deleteById(id); }
+    @Transactional(readOnly = true)
+    public Optional<Clientes> findEmail(String email){ return this.repositoryClient.findByEmail(email);}
 }

@@ -37,7 +37,31 @@ public class ServiceProfile {
         if(!profil.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+
+        if(profile.getName() != null && !profile.getName().isEmpty()){
+            profil.get().setName(profile.getName());
+        }
+
+        if(profile.getLastName() != null && !profile.getLastName().isEmpty()){
+            profil.get().setLastName(profile.getLastName());
+        }
+
+        if(profile.getAddress() != null && !profile.getAddress().isEmpty()){
+            profil.get().setAddress(profile.getAddress());
+        }
+
+        if(profile.getPhone() != null && !profile.getPhone().isEmpty()){
+            profil.get().setPhone(profile.getPhone());
+        }
+
+        if(profile.getPostalCode() != null && !profile.getPostalCode().isEmpty()){
+            profil.get().setPostalCode(profile.getPostalCode());
+        }
+
+        if(profile.getAvatar() != null && !profile.getAvatar().isEmpty()){
+            profil.get().setAvatar(profile.getAvatar());
+        }
+
         return this.repositoryProfile.save(profil.get()); }
 
     @Transactional

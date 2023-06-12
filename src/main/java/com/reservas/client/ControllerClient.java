@@ -27,7 +27,7 @@ public class ControllerClient {
     }
 
     @PostMapping
-    public ResponseEntity<Clientes> create(@RequestBody @Valid Clientes client) {
+    public ResponseEntity<Clientes> create(@RequestBody @Valid Clientes client) throws NullResponseNotFoundException {
         return ResponseEntity.ok(this.serviceClient.create(client));
     }
 

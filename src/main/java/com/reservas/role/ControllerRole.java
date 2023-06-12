@@ -25,7 +25,7 @@ public class ControllerRole {
     }
 
     @PostMapping
-    public ResponseEntity<Roless> create(@RequestBody @Valid Roless roles){
+    public ResponseEntity<Roless> create(@RequestBody @Valid Roless roles) throws NullResponseNotFoundException {
         return ResponseEntity.ok(this.serviceRole.create(roles));
     }
 

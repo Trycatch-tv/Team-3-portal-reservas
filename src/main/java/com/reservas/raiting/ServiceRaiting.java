@@ -36,7 +36,13 @@ public class ServiceRaiting {
         if(!raitin.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+        //score, comments
+        if(raiting.getComments() != null && !raiting.getComments().isEmpty()){
+            raitin.get().setComments(raiting.getComments());
+        }
+        if(raiting.getScore() != null && raiting.getScore() >= 0 && raiting.getScore() <= 10){
+            raitin.get().setScore(raiting.getScore());
+        }
         return this.repositoryRaiting.save(raitin.get()); }
 
     @Transactional

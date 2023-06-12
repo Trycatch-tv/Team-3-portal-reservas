@@ -35,7 +35,40 @@ public class ServiceConfigRestaurant {
         if(!restaurant.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+
+        if(configRestaurant.getName() != null && !configRestaurant.getName().isEmpty()){
+            restaurant.get().setName(configRestaurant.getName());
+        }
+        if(configRestaurant.getSlogan() != null && !configRestaurant.getSlogan().isEmpty()){
+            restaurant.get().setSlogan(configRestaurant.getSlogan());
+        }
+        if(configRestaurant.getLogo() != null && !configRestaurant.getLogo().isEmpty()){
+            restaurant.get().setLogo(configRestaurant.getLogo());
+        }
+        if(configRestaurant.getBanner() != null && !configRestaurant.getBanner().isEmpty()){
+            restaurant.get().setBanner(configRestaurant.getBanner());
+        }
+
+        if(configRestaurant.getDescription() != null && !configRestaurant.getDescription().isEmpty()){
+            restaurant.get().setDescription(configRestaurant.getDescription());
+        }
+        if(configRestaurant.getAddress() != null && !configRestaurant.getAddress().isEmpty()){
+            restaurant.get().setAddress(configRestaurant.getAddress());
+        }
+        if(configRestaurant.getPostalCode() != null && !configRestaurant.getPostalCode().isEmpty()){
+            restaurant.get().setPostalCode(configRestaurant.getPostalCode());
+        }
+        if(configRestaurant.getPhone() != null && !configRestaurant.getPhone().isEmpty()){
+            restaurant.get().setPhone(configRestaurant.getPhone());
+        }
+        //code_trade,email
+        if(configRestaurant.getCodeTrade() != null && !configRestaurant.getCodeTrade().isEmpty()){
+            restaurant.get().setCodeTrade(configRestaurant.getCodeTrade());
+        }
+
+        if(configRestaurant.getEmail() != null && !configRestaurant.getEmail().isEmpty()){
+            restaurant.get().setEmail(configRestaurant.getEmail());
+        }
         return this.repositoryConfigRestaurant.save(restaurant.get());
     }
 
