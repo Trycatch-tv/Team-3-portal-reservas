@@ -6,6 +6,7 @@ import com.reservas.table.TableRest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +16,11 @@ import java.util.Optional;
 public class ServiceMap {
 
     private final RepositoryMap repositoryMap;
+
+    @Transactional(readOnly = true)
     public List<Maps> list(){ return this.repositoryMap.findAll(); }
 
+    @Transactional(readOnly = true)
     public Maps show(Long id) throws NullResponseNotFoundException  {
         Optional<Maps> maps =this.repositoryMap.findById(id);
         if(!maps.isPresent()){
@@ -24,8 +28,10 @@ public class ServiceMap {
         }
         return maps.get(); }
 
+    @Transactional
     public Maps create(Maps maps){ return this.repositoryMap.save(maps); }
 
+    @Transactional
     public Maps edit(Maps maps) throws NullResponseNotFoundException {
         Optional<Maps> map =this.repositoryMap.findById(maps.getId());
         if(!map.isPresent()){
@@ -34,6 +40,7 @@ public class ServiceMap {
         //Validar entrada
         return this.repositoryMap.save(map.get()); }
 
+    @Transactional
     public void delete(Long id) throws NullResponseNotFoundException {
         Optional<Maps> maps =this.repositoryMap.findById(id);
         if(!maps.isPresent()){

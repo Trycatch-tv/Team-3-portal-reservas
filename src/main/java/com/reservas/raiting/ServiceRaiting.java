@@ -6,6 +6,7 @@ import com.reservas.table.TableRest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +16,10 @@ import java.util.Optional;
 public class ServiceRaiting {
 
     private final RepositoryRaiting repositoryRaiting;
+    @Transactional(readOnly = true)
     public List<Raiting> list(){ return this.repositoryRaiting.findAll(); }
 
+    @Transactional(readOnly = true)
     public Raiting show(Long id) throws NullResponseNotFoundException {
         Optional<Raiting> raiting = this.repositoryRaiting.findById(id);
         if(!raiting.isPresent()){
@@ -24,8 +27,10 @@ public class ServiceRaiting {
         }
         return raiting.get(); }
 
+    @Transactional
     public Raiting create(Raiting raiting){ return this.repositoryRaiting.save(raiting); }
 
+    @Transactional
     public Raiting edit(Raiting raiting) throws NullResponseNotFoundException{
         Optional<Raiting> raitin = this.repositoryRaiting.findById(raiting.getId());
         if(!raitin.isPresent()){
@@ -34,6 +39,7 @@ public class ServiceRaiting {
         //Validar entrada
         return this.repositoryRaiting.save(raitin.get()); }
 
+    @Transactional
     public void delete(Long id) throws NullResponseNotFoundException{
         Optional<Raiting> raiting = this.repositoryRaiting.findById(id);
         if(!raiting.isPresent()){

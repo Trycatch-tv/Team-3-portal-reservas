@@ -1,6 +1,8 @@
 package com.reservas.configrestaurant;
 
-import com.reservas.client.Client;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.reservas.client.Clientes;
 import com.reservas.dish.Dish;
 import com.reservas.follow.Follow;
 import com.reservas.raiting.Raiting;
@@ -65,15 +67,15 @@ public class ConfigRestaurant {
     private Double discount;
 
 
-    @Column(name = "media_raiting")
+    @Column(name = "media_raiting",columnDefinition = "Decimal(10,2) default '0.00'" )
     private Double mediaRaiting;
 
-    @Column(name = "count_raiting")
+    @Column(name = "count_raiting",columnDefinition = "Decimal(10,2) default '0.00'" )
     private Double countRaiting;
 
-    @Pattern(regexp = "/^[\\(]?[\\+]?(\\d{2}|\\d{3})[\\)]?[\\s]?((\\d{6}|\\d{8})|(\\d{3}[\\*\\.\\-\\s]){3}|(\\d{2}[\\*\\.\\-\\s]){4}|(\\d{4}[\\*\\.\\-\\s]){2})|\\d{8}|\\d{10}|\\d{12}$/;", message = "Format not reconized")
+    @Pattern(regexp = "^[0-9]{1,12}$", message = "Only numbers")
     @Column(name = "phone")
-    private LocalDate phone;
+    private String phone;
 
     @NotBlank(message = "Code ecommerce is required")
     @NotNull(message = "Not null")
@@ -86,24 +88,29 @@ public class ConfigRestaurant {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client client;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Clientes.class)
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
+    private Clientes clientes;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "configRestaurant_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Sucursal.class)
+    @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private List<Sucursal> sucursals;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "configRestaurant_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Dish.class )
+    @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private List<Dish> dishes;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "configRestaurant_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Follow.class)
+    @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private List<Follow> follows;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "configRestaurant_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Raiting.class)
+    @JoinColumn(name = "config_estaurant_id", referencedColumnName = "id")
     private List<Raiting> raiting;
 
     @CreationTimestamp

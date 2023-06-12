@@ -1,6 +1,8 @@
 package com.reservas.booking;
 
-import com.reservas.client.Client;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.reservas.client.Clientes;
 import com.reservas.state.States;
 import com.reservas.sucursal.Sucursal;
 import com.reservas.table.TableRest;
@@ -45,23 +47,23 @@ public class Booking {
     @Column(name = "time_book")
     private LocalTime timeBook;
 
-
-    @Column(name = "origin",columnDefinition = "varchar(255) default 'Local'")
-    private String origin;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = TableRest.class, optional = false)
     @JoinColumn(name = "tables_id", referencedColumnName = "id")
     private TableRest tableRest;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = States.class, optional = false)
     @JoinColumn(name = "states_id", referencedColumnName = "id")
     private States states;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client client;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Clientes.class, optional = false)
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
+    private Clientes clientes;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Sucursal.class, optional = false)
     @JoinColumn(name = "sucursal_id", referencedColumnName = "id")
     private Sucursal sucursal;
 

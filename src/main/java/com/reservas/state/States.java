@@ -1,5 +1,6 @@
 package com.reservas.state;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.reservas.booking.Booking;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -35,7 +36,8 @@ public class States {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Booking.class)
     @JoinColumn(name = "states_id", referencedColumnName = "id")
     private List<Booking> bookings;
 

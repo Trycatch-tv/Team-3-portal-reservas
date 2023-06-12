@@ -4,6 +4,7 @@ import com.reservas.error.NullResponseNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,8 +14,11 @@ import java.util.Optional;
 public class ServiceState {
 
     private final RepositoryState repositoryStates;
+
+    @Transactional(readOnly = true)
     public List<States> list(){ return this.repositoryStates.findAll(); }
 
+    @Transactional(readOnly = true)
     public States show(Long id)throws NullResponseNotFoundException {
         Optional<States> states = this.repositoryStates.findById(id);
         if(!states.isPresent()){
@@ -22,8 +26,10 @@ public class ServiceState {
         }
         return states.get(); }
 
+    @Transactional
     public States create(States states){ return this.repositoryStates.save(states); }
 
+    @Transactional
     public States edit(States states)throws NullResponseNotFoundException{
         Optional<States> state = this.repositoryStates.findById(states.getId());
         if(!state.isPresent()){
@@ -32,6 +38,7 @@ public class ServiceState {
         //Validar entrada
         return this.repositoryStates.save(state.get()); }
 
+    @Transactional
     public void delete(Long id) throws NullResponseNotFoundException {
         Optional<States> states = Optional.of(this.repositoryStates.findById(id).orElseThrow(()->new NullResponseNotFoundException("Data not available")));
         this.repositoryStates.deleteById(id);

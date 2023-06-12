@@ -1,7 +1,5 @@
 package com.reservas.detailraiting;
 
-import com.reservas.autority.Authority;
-import com.reservas.autority.ServiceAuthority;
 import com.reservas.error.NullResponseNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

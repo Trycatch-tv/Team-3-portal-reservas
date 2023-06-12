@@ -1,6 +1,7 @@
 package com.reservas.detailraiting;
 
-import com.reservas.client.Client;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.reservas.client.Clientes;
 import com.reservas.raiting.Raiting;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -30,11 +31,13 @@ public class DetailRaiting {
     @Column(name = "comments")
     private String comments;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client client;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,optional = false,targetEntity = Clientes.class)
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
+    private Clientes clientes;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,optional = false, targetEntity = Raiting.class)
     @JoinColumn(name = "raiting_id", referencedColumnName = "id")
     private Raiting raiting;
 

@@ -3,8 +3,8 @@ package com.reservas.role;
 
 import com.reservas.error.NullResponseNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,27 +14,33 @@ import java.util.Optional;
 public class ServiceRole {
 
     private final RepositoryRole repositoryRole;
-    public List<Roles> list(){ return this.repositoryRole.findAll(); }
 
-    public Roles show(Long id)throws NullResponseNotFoundException {
-        Optional<Roles> roles = this.repositoryRole.findById(id);
+    @Transactional(readOnly = true)
+    public List<Roless> list(){ return this.repositoryRole.findAll(); }
+
+    @Transactional(readOnly = true)
+    public Roless show(Long id)throws NullResponseNotFoundException {
+        Optional<Roless> roles = this.repositoryRole.findById(id);
         if(!roles.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
         return roles.get(); }
 
-    public Roles create(Roles roles){ return this.repositoryRole.save(roles); }
+    @Transactional
+    public Roless create(Roless roles){ return this.repositoryRole.save(roles); }
 
-    public Roles edit(Roles roles)throws NullResponseNotFoundException{
-        Optional<Roles> role = this.repositoryRole.findById(roles.getId());
+    @Transactional
+    public Roless edit(Roless roles)throws NullResponseNotFoundException{
+        Optional<Roless> role = this.repositoryRole.findById(roles.getId());
         if(!role.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
         //Validar entrada
         return this.repositoryRole.save(role.get()); }
 
+    @Transactional
     public void delete(Long id)throws NullResponseNotFoundException{
-        Optional<Roles> roles = this.repositoryRole.findById(id);
+        Optional<Roless> roles = this.repositoryRole.findById(id);
         if(!roles.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }

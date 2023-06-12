@@ -1,13 +1,15 @@
 package com.reservas.client;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.booking.Booking;
 import com.reservas.configrestaurant.ConfigRestaurant;
 import com.reservas.detailraiting.DetailRaiting;
 import com.reservas.follow.Follow;
 import com.reservas.profile.Profile;
 import com.reservas.raiting.Raiting;
-import com.reservas.role.Roles;
+import com.reservas.role.Roless;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -26,8 +28,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "client")
-public class Client {
+@Table(name = "clientes")
+public class Clientes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,32 +43,40 @@ public class Client {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(mappedBy = "client", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value="client")
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "clientes",targetEntity = Profile.class)
     private Profile profile;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Raiting.class)
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<Raiting> raiting;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Follow.class)
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<Follow> follows;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = DetailRaiting.class )
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<DetailRaiting> detailRaitings;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Booking.class)
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<Booking> bookings;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    private Roles role;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "clientes",fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Roless> roless;
+
+
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = ConfigRestaurant.class)
+    @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<ConfigRestaurant> configRestaurants;
 
     @CreationTimestamp

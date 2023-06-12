@@ -1,5 +1,7 @@
 package com.reservas.categorydish;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.dish.Dish;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -34,7 +36,8 @@ public class CategoryDish {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Dish.class)
     @JoinColumn(name = "categorydish_id", referencedColumnName = "id")
     private List<Dish> dishes;
 

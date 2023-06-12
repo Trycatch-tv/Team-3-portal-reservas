@@ -1,5 +1,8 @@
 package com.reservas.dish;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.categorydish.CategoryDish;
 import com.reservas.configrestaurant.ConfigRestaurant;
 import jakarta.persistence.*;
@@ -44,12 +47,14 @@ public class Dish {
     @Column(name = "image")
     private String image;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = CategoryDish.class, optional = false)
     @JoinColumn(name = "categorydish_id", referencedColumnName = "id")
     private CategoryDish categoryDish;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "configRestaurant_id", referencedColumnName = "id")
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = ConfigRestaurant.class, optional = false)
+    @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private ConfigRestaurant configRestaurant;
 
     @CreationTimestamp
