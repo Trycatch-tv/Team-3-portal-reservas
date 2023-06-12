@@ -27,7 +27,10 @@ public class ServiceState {
         return states.get(); }
 
     @Transactional
-    public States create(States states){ return this.repositoryStates.save(states); }
+    public States create(States states) throws NullResponseNotFoundException {
+        Optional<States> states1 = Optional.of(findState(states.getName()).orElseThrow(()->new NullResponseNotFoundException("States already exists")));
+        return this.repositoryStates.save(states);
+    }
 
     @Transactional
     public States edit(States states)throws NullResponseNotFoundException{
@@ -44,4 +47,6 @@ public class ServiceState {
         this.repositoryStates.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<States> findState(String name){ return this.repositoryStates.findByName(name);}
 }

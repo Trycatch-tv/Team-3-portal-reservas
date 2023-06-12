@@ -30,7 +30,7 @@ public class ControllerState {
     }
 
     @PostMapping
-    public  ResponseEntity<States> create(@RequestBody @Valid States states){
+    public  ResponseEntity<States> create(@RequestBody @Valid States states) throws NullResponseNotFoundException {
         return ResponseEntity.ok(this.serviceState.create(states));
     }
 

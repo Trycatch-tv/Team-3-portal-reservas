@@ -31,10 +31,10 @@ public class ServiceCategoryDish {
     }
 
     @Transactional
-    public CategoryDish create(CategoryDish categoryDish) {
+    public CategoryDish create(CategoryDish categoryDish) throws NullResponseNotFoundException {
         Optional<CategoryDish> categoryDish1 = findCategory(categoryDish.getName());
         if (categoryDish1.isPresent()) {
-            return categoryDish;
+            throw new NullResponseNotFoundException("Name already exists");
         }
         return this.repositoryCategoryDish.save(categoryDish);
     }
@@ -52,6 +52,7 @@ public class ServiceCategoryDish {
         this.repositoryCategoryDish.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     public Optional<CategoryDish> findCategory(String name){
         return this.repositoryCategoryDish.findByName(name);
     };

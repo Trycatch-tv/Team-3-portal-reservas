@@ -37,7 +37,7 @@ public class Clientes {
     @Email(message = "Invalid email")
     @NotBlank(message = "Name is required")
     @NotNull(message = "Not null")
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
 
     @Column(name = "password")

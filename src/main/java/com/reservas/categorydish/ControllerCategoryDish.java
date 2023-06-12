@@ -27,7 +27,7 @@ public class ControllerCategoryDish {
         return ResponseEntity.ok(this.serviceCategoryDish.show(id)); }
 
     @PostMapping
-    public ResponseEntity<CategoryDish> create(@RequestBody @Valid CategoryDish categoryDish) {
+    public ResponseEntity<CategoryDish> create(@RequestBody @Valid CategoryDish categoryDish)  throws NullResponseNotFoundException {
         return ResponseEntity.ok(this.serviceCategoryDish.create(categoryDish));
     }
 

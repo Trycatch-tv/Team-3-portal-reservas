@@ -25,7 +25,13 @@ public class ServiceClient {
         return client.get();}
 
     @Transactional
-    public Clientes create(Clientes client){ return this.repositoryClient.save(client); }
+    public Clientes create(Clientes client) throws NullResponseNotFoundException {
+        Optional<Clientes> clientes = findEmail(client.getEmail());
+        if (clientes.isPresent()){
+            throw new NullResponseNotFoundException("Email already exist");
+        }
+        return this.repositoryClient.save(client);
+    }
 
     @Transactional
     public Clientes edit(Clientes client) throws NullResponseNotFoundException{
@@ -44,4 +50,6 @@ public class ServiceClient {
             throw new NullResponseNotFoundException("Data not available");
         }
         this.repositoryClient.deleteById(id); }
+    @Transactional(readOnly = true)
+    public Optional<Clientes> findEmail(String email){ return this.repositoryClient.findByEmail(email);}
 }

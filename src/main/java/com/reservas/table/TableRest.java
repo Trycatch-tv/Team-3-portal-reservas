@@ -31,7 +31,7 @@ public class TableRest {
 
     @NotBlank(message = "Name is requerid")
     @NotNull(message = "Not possible null")
-    @Column(name="name", unique = true)
+    @Column(name="name")
     private String name;
 
     @Column(name = "description")
