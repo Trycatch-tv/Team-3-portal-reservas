@@ -31,8 +31,10 @@ public class ServiceDetailRaiting {
     @Transactional
     public DetailRaiting edit(DetailRaiting detailRaiting) throws NullResponseNotFoundException {
         Optional<DetailRaiting> detail = Optional.of(this.repositoryDetailRaiting.findById(detailRaiting.getId()).orElseThrow(()->new NullResponseNotFoundException("Data not available")));
-        //Validar entrada
-        return this.repositoryDetailRaiting.save(detailRaiting);
+        if(detailRaiting.getComments() != null && !detailRaiting.getComments().isEmpty()){
+            detail.get().setComments(detailRaiting.getComments());
+        }
+        return this.repositoryDetailRaiting.save(detail.get());
     }
 
     @Transactional

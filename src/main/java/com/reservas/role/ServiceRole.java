@@ -41,7 +41,22 @@ public class ServiceRole {
         if(!role.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+
+        if(roles.getName() != null && !roles.getName().isEmpty()){
+            if(!roles.getName().equals(role.get().getName())){
+                Optional<Roless> newName = findRoles(roles.getName());
+                if(newName.isPresent()){
+                    throw new NullResponseNotFoundException("Role already exists");
+                }
+                role.get().setName(roles.getName());
+            }
+
+        }
+
+        if(roles.getDescription() != null && !roles.getDescription().isEmpty()){
+            role.get().setDescription(roles.getDescription());
+        }
+
         return this.repositoryRole.save(role.get()); }
 
     @Transactional

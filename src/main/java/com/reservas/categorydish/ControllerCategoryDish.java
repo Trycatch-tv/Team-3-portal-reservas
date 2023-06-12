@@ -28,6 +28,7 @@ public class ControllerCategoryDish {
 
     @PostMapping
     public ResponseEntity<CategoryDish> create(@RequestBody @Valid CategoryDish categoryDish)  throws NullResponseNotFoundException {
+        System.out.println(categoryDish.getName()+" Controller");
         return ResponseEntity.ok(this.serviceCategoryDish.create(categoryDish));
     }
 

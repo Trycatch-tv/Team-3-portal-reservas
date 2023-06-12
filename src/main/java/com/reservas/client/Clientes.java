@@ -44,37 +44,37 @@ public class Clientes {
     private String password;
 
 
-    @JsonManagedReference
+
     @OneToOne(mappedBy = "clientes",targetEntity = Profile.class)
     private Profile profile;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Raiting.class)
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<Raiting> raiting;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Follow.class)
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<Follow> follows;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = DetailRaiting.class )
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<DetailRaiting> detailRaitings;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Booking.class)
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<Booking> bookings;
 
 
-    @JsonManagedReference
+
     @ManyToMany(mappedBy = "clientes",fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Roless> roless;
 
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = ConfigRestaurant.class)
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private List<ConfigRestaurant> configRestaurants;

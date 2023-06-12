@@ -36,7 +36,23 @@ public class ServiceDish {
         if(!dishes.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+
+        if(dish.getName() != null && !dish.getName().isEmpty()){
+            dishes.get().setName(dish.getName());
+        }
+
+        if(dish.getDescription() != null && !dish.getDescription().isEmpty()){
+            dishes.get().setDescription(dish.getDescription());
+        }
+
+        if(dish.getImage() != null && !dish.getImage().isEmpty()){
+            dishes.get().setImage(dish.getImage());
+        }
+
+        if(dish.getPrice() != null && !dish.getName().isEmpty() && dish.getPrice() > 0){
+            dishes.get().setPrice(dish.getPrice());
+        }
+
         return this.repositoryDish.save(dishes.get()); }
 
     @Transactional

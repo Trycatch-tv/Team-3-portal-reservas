@@ -1,7 +1,6 @@
 package com.reservas.categorydish;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+//import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.dish.Dish;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -15,11 +14,11 @@ import java.util.List;
 
 @Setter
 @Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
+@ToString
 @Table(name = "category_dish")
 public class CategoryDish {
     @Id
@@ -36,7 +35,7 @@ public class CategoryDish {
     @Column(name = "description")
     private String description;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Dish.class)
     @JoinColumn(name = "categorydish_id", referencedColumnName = "id")
     private List<Dish> dishes;

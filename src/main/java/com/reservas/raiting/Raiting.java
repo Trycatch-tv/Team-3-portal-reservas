@@ -1,6 +1,7 @@
 package com.reservas.raiting;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.client.Clientes;
 import com.reservas.configrestaurant.ConfigRestaurant;
@@ -40,17 +41,17 @@ public class Raiting {
     @Column(name = "comments")
     private String comments;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = DetailRaiting.class)
     @JoinColumn(name = "raiting_id", referencedColumnName = "id")
     private List<DetailRaiting> detailRaitings;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = ConfigRestaurant.class,optional = false)
     @JoinColumn(name = "config_restaurant_id", referencedColumnName = "id")
     private ConfigRestaurant configRestaurant;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Clientes.class)
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private Clientes clientes;

@@ -1,6 +1,7 @@
 package com.reservas.profile;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.client.Clientes;
 import jakarta.persistence.*;
@@ -54,7 +55,7 @@ public class Profile {
     @Column(name="avatar")
     private String avatar;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Clientes.class, optional = false)
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private Clientes clientes;

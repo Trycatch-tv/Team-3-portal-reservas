@@ -39,7 +39,19 @@ public class ServiceClient {
         if(!clientOpt.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+        if(client.getEmail() != null && !client.getEmail().isEmpty()){
+            if(!clientOpt.get().getEmail().equals(client.getEmail())){
+                Optional<Clientes> newEmailclientes = findEmail(client.getEmail());
+                if(newEmailclientes.isPresent()){
+                    throw new NullResponseNotFoundException("Email already exists");
+                }
+                clientOpt.get().setEmail(client.getEmail());
+            }
+        }
+        //Implementar passwordEcoder
+        if(client.getPassword() !=null && !client.getPassword().isEmpty()){
+            clientOpt.get().setPassword(client.getPassword());
+        }
         return this.repositoryClient.save(clientOpt.get());
     }
 

@@ -1,6 +1,7 @@
 package com.reservas.booking;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.client.Clientes;
 import com.reservas.state.States;
@@ -52,17 +53,17 @@ public class Booking {
     @JoinColumn(name = "tables_id", referencedColumnName = "id")
     private TableRest tableRest;
 
-    @JsonManagedReference
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = States.class, optional = false)
     @JoinColumn(name = "states_id", referencedColumnName = "id")
     private States states;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Clientes.class, optional = false)
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private Clientes clientes;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Sucursal.class, optional = false)
     @JoinColumn(name = "sucursal_id", referencedColumnName = "id")
     private Sucursal sucursal;

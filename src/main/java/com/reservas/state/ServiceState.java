@@ -1,6 +1,7 @@
 package com.reservas.state;
 
 import com.reservas.error.NullResponseNotFoundException;
+import com.reservas.role.Roless;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,20 @@ public class ServiceState {
         if(!state.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+        if(states.getName() != null && !states.getName().isEmpty()){
+            if(!states.getName().equals(state.get().getName())){
+                Optional<States> newName = findState(states.getName());
+                if(newName.isPresent()){
+                    throw new NullResponseNotFoundException("State already exists");
+                }
+                state.get().setName(states.getName());
+            }
+
+        }
+
+        if(states.getDescription() != null && !states.getDescription().isEmpty()){
+            state.get().setDescription(states.getDescription());
+        }
         return this.repositoryStates.save(state.get()); }
 
     @Transactional

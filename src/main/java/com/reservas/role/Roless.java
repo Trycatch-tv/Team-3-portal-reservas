@@ -1,6 +1,7 @@
 package com.reservas.role;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.client.Clientes;
 import jakarta.persistence.*;
@@ -37,7 +38,7 @@ public class Roless {
     @Column(name = "description")
     private String description;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,targetEntity = Clientes.class)
     @JoinTable(name = "roless_clientes", joinColumns = @JoinColumn(name = "roless_id", referencedColumnName = "id")
             ,inverseJoinColumns = @JoinColumn(name = "cliente_id", referencedColumnName = "id"))
