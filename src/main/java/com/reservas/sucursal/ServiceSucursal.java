@@ -71,16 +71,16 @@ public class ServiceSucursal {
             sucursale.get().setMaxWaiting(sucursal.getMaxWaiting());
         }
         //Validar si llega valor boolean, terraza, overBooking,status
-        if(sucursal.getSmoking() != null && Boolean.valueOf(sucursal.getSmoking()) ){
+        if(sucursal.getSmoking() != null && (sucursal.getSmoking().equals(true) ||sucursal.getSmoking().equals(false) )){
             sucursale.get().setSmoking(sucursal.getSmoking());
         }
-        if(sucursal.getTerraza() != null && Boolean.valueOf(sucursal.getTerraza()) ){
+        if(sucursal.getTerraza() != null && (sucursal.getTerraza().equals(true) ||sucursal.getTerraza().equals(false) )){
             sucursale.get().setTerraza(sucursal.getTerraza());
         }
-        if(sucursal.getOverBooking() != null && Boolean.valueOf(sucursal.getOverBooking()) ){
+        if(sucursal.getOverBooking() != null && (sucursal.getOverBooking().equals(true) ||sucursal.getOverBooking().equals(false) ) ){
             sucursale.get().setOverBooking(sucursal.getOverBooking());
         }
-        if(sucursal.getStatus() != null && Boolean.valueOf(sucursal.getStatus())){
+        if(sucursal.getStatus() != null && (sucursal.getStatus().equals(true) ||sucursal.getStatus().equals(false) )){
             sucursale.get().setStatus(sucursal.getStatus());
         }
 

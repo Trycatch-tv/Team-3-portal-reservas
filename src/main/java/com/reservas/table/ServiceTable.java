@@ -37,7 +37,27 @@ public class ServiceTable {
         if(!table.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+        //name, description, capacity,position, status
+        if(tableRest.getName() != null && !tableRest.getName().isEmpty()){
+            table.get().setName(tableRest.getName());
+        }
+
+        if(tableRest.getDescription() != null && !tableRest.getDescription().isEmpty()){
+            table.get().setDescription(tableRest.getDescription());
+        }
+
+        if(tableRest.getCapacity() != null && tableRest.getCapacity() > 0){
+            table.get().setCapacity(tableRest.getCapacity());
+        }
+
+        if(tableRest.getPosition() != null && !tableRest.getPosition().isEmpty()){
+            table.get().setPosition(tableRest.getPosition());
+        }
+
+        if(tableRest.getStatus() != null && (tableRest.getStatus().equals(true) || tableRest.getStatus().equals(false))){
+            table.get().setStatus(tableRest.getStatus());
+        }
+
         return this.repositoryTable.save(table.get()); }
 
     @Transactional

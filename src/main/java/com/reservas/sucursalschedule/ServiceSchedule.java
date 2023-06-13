@@ -37,7 +37,17 @@ public class ServiceSchedule {
         if(!schedul.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+        if (schedule.getDay() != null && !schedule.getDay().isEmpty()){
+            schedul.get().setDay(schedule.getDay());
+        }
+
+        if (schedule.getStartService() != null ){
+            schedul.get().setStartService(schedule.getStartService());
+        }
+
+        if (schedule.getEndService() != null ){
+            schedul.get().setEndService(schedule.getEndService());
+        }
         return this.repositorySchedule.save(schedul.get()); }
 
     @Transactional
