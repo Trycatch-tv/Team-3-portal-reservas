@@ -29,7 +29,8 @@ public class ServiceProfile {
         return profile.get(); }
 
     @Transactional
-    public Profile create(Profile profile){ return this.repositoryProfile.save(profile); }
+    public Profile create(Profile profile){
+        return this.repositoryProfile.save(profile); }
 
     @Transactional
     public Profile edit(Profile profile) throws NullResponseNotFoundException {

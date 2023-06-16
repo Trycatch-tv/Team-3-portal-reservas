@@ -1,6 +1,5 @@
 package com.reservas.table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.reservas.booking.Booking;
 import com.reservas.sucursal.Sucursal;
@@ -10,8 +9,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -61,11 +58,4 @@ public class TableRest {
     @JoinColumn(name = "tables_id", referencedColumnName = "id")
     private List<Booking> bookings;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private Date created;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at",updatable = true)
-    private Date updated;
 }

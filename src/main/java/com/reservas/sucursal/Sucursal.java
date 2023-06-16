@@ -1,25 +1,18 @@
 package com.reservas.sucursal;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.reservas.booking.Booking;
 import com.reservas.configrestaurant.ConfigRestaurant;
 import com.reservas.sucursalmap.Maps;
 import com.reservas.sucursalschedule.Schedule;
 import com.reservas.table.TableRest;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -114,11 +107,4 @@ public class Sucursal {
     @JoinColumn(name = "sucursal_id", referencedColumnName = "id")
     private List<Schedule> schedules;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private Date created;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at",updatable = true)
-    private Date updated;
 }

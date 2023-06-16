@@ -1,8 +1,9 @@
 package com.reservas.configrestaurant;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.reservas.auditable.AuditableEntities;
 import com.reservas.client.Clientes;
 import com.reservas.dish.Dish;
 import com.reservas.follow.Follow;
@@ -11,11 +12,7 @@ import com.reservas.sucursal.Sucursal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -26,7 +23,7 @@ import java.util.List;
 @Entity
 @Builder
 @Table(name = "config_restaurant")
-public class ConfigRestaurant {
+public class ConfigRestaurant extends AuditableEntities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -114,11 +111,5 @@ public class ConfigRestaurant {
     @JoinColumn(name = "config_estaurant_id", referencedColumnName = "id")
     private List<Raiting> raiting;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private Date created;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at",updatable = true)
-    private Date updated;
 }

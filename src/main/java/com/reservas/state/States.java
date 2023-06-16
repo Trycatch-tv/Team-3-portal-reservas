@@ -1,14 +1,11 @@
 package com.reservas.state;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.reservas.booking.Booking;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -42,11 +39,4 @@ public class States {
     @JoinColumn(name = "states_id", referencedColumnName = "id")
     private List<Booking> bookings;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private Date created;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at",updatable = true)
-    private Date updated;
 }

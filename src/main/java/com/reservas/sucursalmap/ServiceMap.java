@@ -37,7 +37,12 @@ public class ServiceMap {
         if(!map.isPresent()){
             throw new NullResponseNotFoundException("Data not available");
         }
-        //Validar entrada
+        if(maps.getName() != null && !maps.getName().isEmpty()){
+            map.get().setName(maps.getName());
+        }
+        if(maps.getDescription() != null && !maps.getDescription().isEmpty()){
+            map.get().setDescription(maps.getDescription());
+        }
         return this.repositoryMap.save(map.get()); }
 
     @Transactional
