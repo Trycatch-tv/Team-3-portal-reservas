@@ -1,16 +1,14 @@
 package com.reservas.profile;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import com.reservas.client.Clientes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 @Setter
@@ -60,11 +58,5 @@ public class Profile {
     @JoinColumn(name = "clientes_id", referencedColumnName = "id")
     private Clientes clientes;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private Date created;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at",updatable = true)
-    private Date updated;
 }
